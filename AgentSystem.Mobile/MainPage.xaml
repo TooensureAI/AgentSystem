@@ -11,25 +11,27 @@
             VerticalOptions="Center">
 
             <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="185"
-                HorizontalOptions="Center" />
+                Source="Types/Types-of-AI-Agents.webp"
+                SemanticProperties.Description="Types of AI Agents diagram"
+                HorizontalOptions="Center"
+                Aspect="AspectFit"
+                WidthRequest="400" />
                 
             <Label
-                Text="Hello, World!"
+                Text="AgentSystem"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
             
             <Label
-                Text="Welcome to Telerik UI for .NET MAUI"
+                Text="A comprehensive framework for autonomous agent development"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to Telerik UI for dot net Multi platform App U I"
+                SemanticProperties.Description="A comprehensive framework for autonomous agent development"
                 FontSize="18"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center" />
 
             <telerik:RadToggleButton
                 x:Name="ToggleBtn"
