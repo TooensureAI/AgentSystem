@@ -3,6 +3,8 @@ using System.Text;
 using AgentSystem.Api.Filters;
 using AgentSystem.Core.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -19,10 +21,10 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
 });
 
-builder.Services.AddVersionedApiExplorer(options =>
+builder.Services.AddApiVersioning(options =>
 {
-    options.GroupNameFormat = "'v'VVV";
-    options.SubstituteApiVersionInUrl = true;
+    options.ReportApiVersions = true;
+    options.DefaultApiVersion = ApiVersion.Default;
 });
 
 // Configure JWT authentication
@@ -158,7 +160,7 @@ if (app.Environment.IsDevelopment())
         options.RouteTemplate = "api-docs/{documentname}/swagger.json";
     });
     
-    // Configure custom Swagger UI
+    // Configure custom Swagger UI with Telerik UI integration
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/api-docs/v1/swagger.json", "AgentSystem API v1");
@@ -174,11 +176,27 @@ if (app.Environment.IsDevelopment())
         
         // Load custom CSS and JavaScript
         options.InjectStylesheet("/swagger-ui/custom.css");
+        options.InjectStylesheet("/swagger-ui/telerik-theme.css");
         options.InjectJavascript("/swagger-ui/custom.js");
         
         // Configure OAuth
         options.OAuthClientId("swagger-ui");
         options.OAuthAppName("Swagger UI");
+        
+        // Customize header
+        options.HeadContent = @"
+            <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
+            <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
+            <link href=""https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"" rel=""stylesheet"">
+            <style>
+                body {
+                    font-family: 'Roboto', sans-serif;
+                }
+                .swagger-ui .topbar {
+                    background-image: linear-gradient(135deg, #ff6358 0%, #3f51b5 100%);
+                }
+            </style>
+        ";
     });
     
     // Add ReDoc as an alternative documentation UI

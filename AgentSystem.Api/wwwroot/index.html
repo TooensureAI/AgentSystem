@@ -5,10 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgentSystem API</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://kendo.cdn.telerik.com/themes/6.2.0/default/default-main.css" rel="stylesheet">
     <style>
+        :root {
+            --telerik-primary: #ff6358;
+            --telerik-secondary: #03a9f4;
+            --telerik-success: #2e7d32;
+            --telerik-info: #0288d1;
+            --telerik-warning: #ffc107;
+            --telerik-error: #d50000;
+            --telerik-dark: #3f51b5;
+            --telerik-light: #f5f5f5;
+            --telerik-inverse: #4c5264;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-family: 'Roboto', sans-serif;
             color: #333;
             margin: 0;
             padding: 0;
@@ -16,10 +31,24 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, var(--telerik-primary) 0%, var(--telerik-dark) 100%);
             color: white;
-            padding: 2rem 0;
+            padding: 3rem 0;
             text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-weight: 500;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
         }
         
         .container {
@@ -28,99 +57,274 @@
             padding: 2rem;
         }
         
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
         .card {
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             padding: 2rem;
-            margin-bottom: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-top: 3px solid var(--telerik-primary);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
-        h1 {
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card.secondary {
+            border-top-color: var(--telerik-secondary);
+        }
+        
+        .card.info {
+            border-top-color: var(--telerik-dark);
+        }
+        
+        .card h2 {
+            color: var(--telerik-primary);
             margin-top: 0;
+            font-weight: 500;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.75rem;
+        }
+        
+        .card.secondary h2 {
+            color: var(--telerik-secondary);
+        }
+        
+        .card.info h2 {
+            color: var(--telerik-dark);
+        }
+        
+        .btn-container {
+            margin-top: auto;
+            padding-top: 1.5rem;
         }
         
         .btn {
             display: inline-block;
-            background-color: #6a11cb;
+            background-color: var(--telerik-primary);
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 500;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .btn:hover {
-            background-color: #5900b3;
+            background-color: var(--telerik-dark);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
         }
         
         .btn-secondary {
-            background-color: #2575fc;
+            background-color: var(--telerik-secondary);
         }
         
         .btn-secondary:hover {
-            background-color: #1a68e5;
+            background-color: var(--telerik-dark);
+        }
+        
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .feature-item {
+            flex: 1 1 300px;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            border-left: 3px solid var(--telerik-primary);
+        }
+        
+        .feature-item h3 {
+            margin-top: 0;
+            color: var(--telerik-primary);
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+        
+        .feature-item.secondary {
+            border-left-color: var(--telerik-secondary);
+        }
+        
+        .feature-item.secondary h3 {
+            color: var(--telerik-secondary);
+        }
+        
+        .feature-item.info {
+            border-left-color: var(--telerik-dark);
+        }
+        
+        .feature-item.info h3 {
+            color: var(--telerik-dark);
+        }
+        
+        .version-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            margin-right: 1rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .version-stable {
+            background-color: var(--telerik-success);
+            color: white;
+        }
+        
+        .version-beta {
+            background-color: var(--telerik-warning);
+            color: #333;
         }
         
         .footer {
             text-align: center;
-            padding: 1rem;
+            padding: 2rem;
             margin-top: 2rem;
-            color: #666;
-            font-size: 0.9rem;
+            background-color: var(--telerik-dark);
+            color: white;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+        
+        .footer a:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-list {
+                flex-direction: column;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>AgentSystem API</h1>
-        <p>A comprehensive API for the AgentSystem autonomous agent framework</p>
+        <p>A comprehensive API for the AgentSystem autonomous agent framework with Telerik UI integration</p>
     </div>
     
     <div class="container">
-        <div class="card">
-            <h2>Welcome to the AgentSystem API</h2>
-            <p>This API provides a comprehensive set of endpoints for managing and interacting with autonomous agents in the AgentSystem framework.</p>
-            <p>Use the links below to explore the API documentation and resources:</p>
-            
-            <div style="margin-top: 1.5rem;">
-                <a href="/swagger" class="btn">Swagger UI Documentation</a>
-                <a href="/api-docs" class="btn btn-secondary">ReDoc Documentation</a>
+        <div class="cards-container">
+            <div class="card">
+                <h2>Welcome to the AgentSystem API</h2>
+                <p>This API provides a comprehensive set of endpoints for managing and interacting with autonomous agents in the AgentSystem framework, enhanced with Telerik UI components.</p>
+                
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <h3>Enhanced Documentation</h3>
+                        <p>Interactive API documentation with Telerik UI components and themes.</p>
+                    </div>
+                    
+                    <div class="feature-item secondary">
+                        <h3>API Versioning</h3>
+                        <p>Full support for API versioning with visual indicators for experimental features.</p>
+                    </div>
+                </div>
+                
+                <div class="btn-container">
+                    <a href="/swagger" class="btn">Swagger UI Documentation</a>
+                    <a href="/api-docs" class="btn btn-secondary">ReDoc Documentation</a>
+                </div>
             </div>
-        </div>
-        
-        <div class="card">
-            <h2>API Versions</h2>
-            <p>The following API versions are available:</p>
             
-            <ul>
-                <li><strong>v1</strong> - Stable API for production use</li>
-                <li><strong>v2</strong> - Beta API with experimental features</li>
-            </ul>
+            <div class="card secondary">
+                <h2>API Versions</h2>
+                <p>The AgentSystem API offers multiple versions to support both stable production use and experimental features.</p>
+                
+                <ul>
+                    <li><span class="version-badge version-stable">v1</span>Stable API for production use</li>
+                    <li><span class="version-badge version-beta">v2</span>Beta API with experimental features</li>
+                </ul>
+                
+                <p>Use the version selector in the documentation to explore the differences between versions.</p>
+                
+                <div class="btn-container">
+                    <a href="/swagger?urls.primaryName=AgentSystem%20API%20v1" class="btn">Use v1 API</a>
+                    <a href="/swagger?urls.primaryName=AgentSystem%20API%20v2%20(Beta)" class="btn btn-secondary">Try v2 Beta</a>
+                </div>
+            </div>
             
-            <p>Use the version selector in the documentation to explore the differences between versions.</p>
-        </div>
-        
-        <div class="card">
-            <h2>Getting Started</h2>
-            <p>To get started with the AgentSystem API, you'll need:</p>
-            
-            <ol>
-                <li>An API key for authentication</li>
-                <li>Basic understanding of RESTful API principles</li>
-                <li>Knowledge of the AgentSystem architecture</li>
-            </ol>
-            
-            <p>Check out the <a href="https://github.com/TooensureAI/AgentSystem" style="color: #2575fc;">GitHub repository</a> for more information.</p>
+            <div class="card info">
+                <h2>Getting Started</h2>
+                <p>Get started quickly with the AgentSystem API using our Telerik UI enhanced documentation.</p>
+                
+                <ol>
+                    <li>Use <strong>JWT tokens</strong> for authentication</li>
+                    <li>Explore the <strong>API endpoints</strong> with interactive try-it-out features</li>
+                    <li>Toggle between <strong>light and dark themes</strong> in the documentation</li>
+                    <li>Use <strong>schema visualization</strong> for better understanding of data models</li>
+                </ol>
+                
+                <p>Check out the <a href="https://github.com/TooensureAI/AgentSystem" style="color: var(--telerik-secondary);">GitHub repository</a> for more information.</p>
+                
+                <div class="btn-container">
+                    <a href="/swagger" class="btn">Start Exploring</a>
+                </div>
+            </div>
         </div>
     </div>
     
     <div class="footer">
-        <p>&copy; 2025 TooensureAI. All rights reserved.</p>
+        <p>&copy; 2025 TooensureAI. All rights reserved. | <a href="https://github.com/TooensureAI/AgentSystem">GitHub</a> | <a href="/api-docs">API Docs</a></p>
+        <p>Powered by <a href="https://www.telerik.com/kendo-ui">Telerik UI</a></p>
     </div>
     
     <script src="https://kendo.cdn.telerik.com/2023.1.314/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Add animations and enhancements with Telerik UI
+            $(".card").kendoRippleContainer();
+            
+            // Add responsive behavior
+            $(window).resize(function() {
+                if ($(window).width() < 768) {
+                    $(".cards-container").css("grid-template-columns", "1fr");
+                } else {
+                    $(".cards-container").css("grid-template-columns", "repeat(auto-fill, minmax(350px, 1fr))");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

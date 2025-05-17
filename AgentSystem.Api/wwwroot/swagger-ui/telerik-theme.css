@@ -1,0 +1,455 @@
+/**
+ * Telerik UI Theme for AgentSystem Swagger UI
+ */
+
+/* Telerik UI colors and variables */
+:root {
+  --telerik-primary: #ff6358;
+  --telerik-secondary: #03a9f4;
+  --telerik-success: #2e7d32;
+  --telerik-info: #0288d1;
+  --telerik-warning: #ffc107;
+  --telerik-error: #d50000;
+  --telerik-dark: #3f51b5;
+  --telerik-light: #f5f5f5;
+  --telerik-inverse: #4c5264;
+  --telerik-series-a: #ff6358;
+  --telerik-series-b: #03a9f4;
+  --telerik-series-c: #ffd246;
+  --telerik-series-d: #28b4c8;
+  --telerik-series-e: #9e9e9e;
+  --telerik-series-f: #8789ff;
+  
+  /* Component specific variables */
+  --telerik-border-radius: 4px;
+  --telerik-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  --telerik-transition: all 0.2s ease;
+  --telerik-font-family: 'Roboto', Arial, sans-serif;
+}
+
+/* Apply Telerik UI styling to Swagger components */
+.swagger-ui .topbar {
+  background: var(--telerik-primary);
+  background: linear-gradient(135deg, var(--telerik-primary) 0%, var(--telerik-dark) 100%);
+}
+
+.swagger-ui .btn {
+  font-family: var(--telerik-font-family);
+  border-radius: var(--telerik-border-radius);
+  box-shadow: var(--telerik-box-shadow);
+  transition: var(--telerik-transition);
+}
+
+.swagger-ui .btn.execute {
+  background-color: var(--telerik-primary);
+  border-color: var(--telerik-primary);
+}
+
+.swagger-ui .btn.execute:hover {
+  background-color: var(--telerik-dark);
+  border-color: var(--telerik-dark);
+}
+
+/* Telerik UI like badges for operations */
+.swagger-ui .opblock-summary-method {
+  border-radius: var(--telerik-border-radius);
+  box-shadow: var(--telerik-box-shadow);
+  font-family: var(--telerik-font-family);
+  font-weight: 500;
+}
+
+/* Telerik UI button styles */
+#theme-toggle {
+  background: var(--telerik-primary);
+  color: white;
+  border: none;
+  border-radius: var(--telerik-border-radius);
+  padding: 8px 12px;
+  font-family: var(--telerik-font-family);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--telerik-transition);
+  box-shadow: var(--telerik-box-shadow);
+}
+
+#theme-toggle:hover {
+  background: var(--telerik-dark);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+/* Telerik UI dropdown styles */
+#api-version-selector select {
+  font-family: var(--telerik-font-family);
+  border: 1px solid #e0e0e0;
+  border-radius: var(--telerik-border-radius);
+  padding: 8px 12px;
+  background-color: white;
+  transition: var(--telerik-transition);
+  box-shadow: var(--telerik-box-shadow);
+}
+
+#api-version-selector select:focus {
+  border-color: var(--telerik-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 99, 88, 0.25);
+}
+
+/* Telerik UI inputs */
+.swagger-ui input[type=text],
+.swagger-ui textarea {
+  font-family: var(--telerik-font-family);
+  border: 1px solid #e0e0e0;
+  border-radius: var(--telerik-border-radius);
+  padding: 8px 12px;
+  transition: var(--telerik-transition);
+}
+
+.swagger-ui input[type=text]:focus,
+.swagger-ui textarea:focus {
+  border-color: var(--telerik-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 99, 88, 0.25);
+}
+
+/* Telerik UI panels */
+.swagger-ui .opblock {
+  border-radius: var(--telerik-border-radius);
+  overflow: hidden;
+  box-shadow: var(--telerik-box-shadow);
+  border: none;
+  margin-bottom: 16px;
+  transition: var(--telerik-transition);
+}
+
+.swagger-ui .opblock:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Operation colors in Telerik UI style */
+.swagger-ui .opblock.opblock-get {
+  border-color: var(--telerik-info);
+  background: rgba(3, 169, 244, 0.05);
+}
+
+.swagger-ui .opblock.opblock-post {
+  border-color: var(--telerik-success);
+  background: rgba(46, 125, 50, 0.05);
+}
+
+.swagger-ui .opblock.opblock-put {
+  border-color: var(--telerik-warning);
+  background: rgba(255, 193, 7, 0.05);
+}
+
+.swagger-ui .opblock.opblock-delete {
+  border-color: var(--telerik-error);
+  background: rgba(213, 0, 0, 0.05);
+}
+
+.swagger-ui .opblock.opblock-patch {
+  border-color: var(--telerik-series-f);
+  background: rgba(135, 137, 255, 0.05);
+}
+
+/* Telerik UI tables */
+.swagger-ui table {
+  font-family: var(--telerik-font-family);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--telerik-border-radius);
+  overflow: hidden;
+  box-shadow: var(--telerik-box-shadow);
+}
+
+.swagger-ui table thead tr th {
+  background: var(--telerik-primary);
+  color: white;
+  padding: 12px 16px;
+  font-weight: 500;
+}
+
+.swagger-ui table tbody tr {
+  transition: var(--telerik-transition);
+}
+
+.swagger-ui table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Telerik UI section headers */
+.swagger-ui .opblock-tag {
+  font-family: var(--telerik-font-family);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--telerik-dark);
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+  transition: var(--telerik-transition);
+}
+
+.swagger-ui .opblock-tag:hover {
+  color: var(--telerik-primary);
+}
+
+/* Telerik UI dark theme */
+.dark-theme {
+  --telerik-primary: #ff6358;
+  --telerik-dark: #3f51b5;
+  --telerik-light: #2d2d2d;
+  --telerik-inverse: #e0e0e0;
+}
+
+.dark-theme .swagger-ui .opblock {
+  background-color: #333;
+  color: #e0e0e0;
+}
+
+.dark-theme .swagger-ui .opblock-summary-operation-id,
+.dark-theme .swagger-ui .opblock-summary-path,
+.dark-theme .swagger-ui .opblock-summary-description {
+  color: #e0e0e0;
+}
+
+.dark-theme .swagger-ui .opblock-summary-method {
+  color: white;
+}
+
+.dark-theme .swagger-ui table thead tr th {
+  background-color: #444;
+}
+
+.dark-theme .swagger-ui table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .swagger-ui .model-box {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+.dark-theme .swagger-ui input[type=text],
+.dark-theme .swagger-ui textarea {
+  background-color: #333;
+  color: #e0e0e0;
+  border-color: #444;
+}
+
+.dark-theme .swagger-ui input[type=text]:focus,
+.dark-theme .swagger-ui textarea:focus {
+  border-color: var(--telerik-primary);
+  box-shadow: 0 0 0 3px rgba(255, 99, 88, 0.25);
+}
+
+/* Telerik UI responsive improvements */
+@media (max-width: 768px) {
+  .swagger-ui .opblock-body {
+    padding: 12px;
+  }
+  
+  .swagger-ui table td, 
+  .swagger-ui table th {
+    padding: 8px;
+  }
+  
+  #api-version-selector {
+    flex-direction: column;
+  }
+  
+  #api-version-selector select {
+    margin-bottom: 8px;
+    width: 100%;
+  }
+  
+  #theme-toggle {
+    width: 100%;
+  }
+}
+
+/* Telerik UI dialog styling */
+.telerik-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.telerik-dialog.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.telerik-dialog-content {
+  background: white;
+  border-radius: var(--telerik-border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.dark-theme .telerik-dialog-content {
+  background: #333;
+  color: #e0e0e0;
+}
+
+.telerik-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.telerik-dialog-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--telerik-dark);
+}
+
+.dark-theme .telerik-dialog-title {
+  color: var(--telerik-primary);
+}
+
+.telerik-dialog-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+}
+
+.telerik-dialog-close:hover {
+  color: var(--telerik-primary);
+}
+
+.telerik-dialog-body {
+  margin-bottom: 15px;
+}
+
+.telerik-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.telerik-dialog-button {
+  padding: 8px 16px;
+  border-radius: var(--telerik-border-radius);
+  margin-left: 10px;
+  cursor: pointer;
+  font-family: var(--telerik-font-family);
+  font-weight: 500;
+  transition: var(--telerik-transition);
+}
+
+.telerik-dialog-button.primary {
+  background-color: var(--telerik-primary);
+  color: white;
+  border: none;
+}
+
+.telerik-dialog-button.primary:hover {
+  background-color: var(--telerik-dark);
+}
+
+.telerik-dialog-button.secondary {
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.telerik-dialog-button.secondary:hover {
+  background-color: #e0e0e0;
+}
+
+.dark-theme .telerik-dialog-button.secondary {
+  background-color: #444;
+  color: #e0e0e0;
+  border: 1px solid #555;
+}
+
+.dark-theme .telerik-dialog-button.secondary:hover {
+  background-color: #555;
+}
+
+/* Custom Telerik UI notification */
+.telerik-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: var(--telerik-border-radius);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  font-family: var(--telerik-font-family);
+  display: flex;
+  align-items: center;
+  min-width: 250px;
+  max-width: 400px;
+  transform: translateX(120%);
+  transition: transform 0.3s ease;
+  z-index: 10000;
+}
+
+.telerik-notification.show {
+  transform: translateX(0);
+}
+
+.telerik-notification.success {
+  background-color: var(--telerik-success);
+  color: white;
+}
+
+.telerik-notification.info {
+  background-color: var(--telerik-info);
+  color: white;
+}
+
+.telerik-notification.warning {
+  background-color: var(--telerik-warning);
+  color: #333;
+}
+
+.telerik-notification.error {
+  background-color: var(--telerik-error);
+  color: white;
+}
+
+.telerik-notification-icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.telerik-notification-content {
+  flex: 1;
+}
+
+.telerik-notification-title {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.telerik-notification-message {
+  font-size: 14px;
+}
+
+.telerik-notification-close {
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.7;
+  cursor: pointer;
+  padding: 0 0 0 10px;
+}
+
+.telerik-notification-close:hover {
+  opacity: 1;
+}
