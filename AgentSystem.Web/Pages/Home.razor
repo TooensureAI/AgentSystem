@@ -1,28 +1,44 @@
 ﻿@page "/"
 
-<PageTitle>Telerik Blazor App | Home</PageTitle>
+<PageTitle>AgentSystem | Home</PageTitle>
 
 <div id="home-page">
     <HomeSvg />
 
-    <h1>Hello, Telerik UI for Blazor!</h1>
+    <h1>Welcome to AgentSystem</h1>
 
-    <p>Welcome to your new Telerik Blazor app.</p>
+    <p>A comprehensive framework for autonomous agent development</p>
+    
+    <div class="agent-image">
+        <img src="images/Types-of-AI-Agents.webp" alt="Types of AI Agents" />
+    </div>
 </div>
 
 <style>
     #home-page {
         margin-left: auto;
         margin-right: auto;
-        max-width: max-content;
+        max-width: 800px;
         text-align: center;
         font-size: var(--kendo-font-size-xl);
     }
 
-    @@media (min-height: calc(56px + 50px + 400px)) {
+    .agent-image {
+        margin-top: 2rem;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .agent-image img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (min-height: calc(56px + 50px + 600px)) {
         /* header + footer + home page container*/
         #home-page {
-            margin-top: calc(50vh - 28px - 25px - 200px);
+            margin-top: calc(50vh - 28px - 25px - 300px);
         }
     }
 </style>
