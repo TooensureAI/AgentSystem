@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentSystem - Autonomous Agent Framework</title>
+    
+    <!-- Telerik Kendo UI CSS -->
+    <link href="https://kendo.cdn.telerik.com/themes/6.2.0/default/default-main.css" rel="stylesheet" />
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #6a11cb;
+            margin-bottom: 1rem;
+        }
+        
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-alt {
+            background-color: #f8f9fa;
+        }
+        
+        .card {
+            transition: transform 0.3s;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 2rem 0;
+        }
+        
+        .api-section {
+            background-color: #f1f5f9;
+        }
+        
+        .code-block {
+            background-color: #282c34;
+            color: #abb2bf;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://raw.githubusercontent.com/TooensureAI/AgentSystem/main/AgentSystem.Web/Resources/Images/dotnet_bot.svg" alt="AgentSystem Logo" height="30">
+                AgentSystem
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#architecture">Architecture</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#api">API</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#getting-started">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./swagger" target="_blank">Swagger</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/TooensureAI/AgentSystem" target="_blank">GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container text-center">
+            <h1 class="display-4">AgentSystem</h1>
+            <p class="lead">A comprehensive .NET-based framework for building and orchestrating autonomous agents with web and mobile interfaces.</p>
+            <div class="d-flex justify-content-center mt-4">
+                <a href="#getting-started" class="btn btn-light btn-lg me-2">Get Started</a>
+                <a href="https://github.com/TooensureAI/AgentSystem" class="btn btn-outline-light btn-lg">View on GitHub</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="text-center mb-5">Key Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="k-icon k-i-toggle-full-screen-mode"></i>
+                            </div>
+                            <h5 class="card-title">Multi-Modal Analysis</h5>
+                            <p class="card-text">Evaluates agent outputs across different modalities including text, visual, and audio.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="k-icon k-i-puzzle"></i>
+                            </div>
+                            <h5 class="card-title">Plugin Architecture</h5>
+                            <p class="card-text">Extensible plugin system for adding new capabilities and integrating with external services.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="k-icon k-i-template-manager"></i>
+                            </div>
+                            <h5 class="card-title">Template-Driven Design</h5>
+                            <p class="card-text">Uses .prompty files to define agent behaviors and capabilities with a flexible templating system.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="k-icon k-i-responsive-layout"></i>
+                            </div>
+                            <h5 class="card-title">Cross-Platform UI</h5>
+                            <p class="card-text">Web and mobile interfaces built with MAUI and Telerik UI components for rich user experiences.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="k-icon k-i-chart-area-clustered"></i>
+                            </div>
+                            <h5 class="card-title">Distributed Evaluation</h5>
+                            <p class="card-text">Comprehensive metrics for assessing agent performance across multiple dimensions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="k-icon k-i-cloud"></i>
+                            </div>
+                            <h5 class="card-title">Aspire Integration</h5>
+                            <p class="card-text">Built on .NET Aspire for cloud-native microservices architecture with monitoring and resilience.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="section section-alt" id="architecture">
+        <div class="container">
+            <h2 class="text-center mb-5">Architecture</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h3>Microservices Design</h3>
+                    <p>AgentSystem is built using a modern microservices architecture with .NET Aspire:</p>
+                    <ul>
+                        <li><strong>API Gateway</strong>: Central entry point for all client interactions</li>
+                        <li><strong>Core Services</strong>: Fundamental agent processing capabilities</li>
+                        <li><strong>Analysis Services</strong>: Specialized processing for different evaluation dimensions</li>
+                        <li><strong>Infrastructure</strong>: Shared resources like caching, database, and messaging</li>
+                    </ul>
+                    <p>The modular design allows for independent scaling and deployment of components.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="code-block">
+<pre>┌─────────────────────────────────────────────────────────────────┐
+│                           API Gateway                           │
+└───────────────────────────────┬─────────────────────────────────┘
+                                │
+        ┌─────────────────────────────────────────────┐
+        │                                             │
+┌───────┴────────┐     ┌──────────────────┐     ┌────┴────────┐
+│ Core Services  │     │ Analysis Services│     │Infrastructure│
+├────────────────┤     ├──────────────────┤     ├─────────────┤
+│MultiModalProc  │     │SemanticAnchor    │     │Redis Cache  │
+│EmbodiedCognit  │     │PredictiveSentim  │     │SQL Server   │
+│CrossModalFeedb │     │Ethics            │     │Service Bus  │
+│TutorialEngine  │     │                  │     │             │
+│MCPProcessor    │     │                  │     │             │
+│WorkflowValidat │     │                  │     │             │
+└────────────────┘     └──────────────────┘     └─────────────┘</pre>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-lg-6 order-lg-2">
+                    <h3>Project Structure</h3>
+                    <p>The solution is organized into several key projects:</p>
+                    <ul>
+                        <li><strong>AgentSystem.Core</strong>: Core framework, interfaces, and agent implementations</li>
+                        <li><strong>AgentSystem.Plugins</strong>: Plugin system for extending agent capabilities</li>
+                        <li><strong>AgentSystem.Web</strong>: Blazor-based web interface with MAUI integration</li>
+                        <li><strong>AgentSystem.Mobile</strong>: MAUI-based mobile application</li>
+                        <li><strong>AgentSystem.AppHost</strong>: Aspire host for microservices architecture</li>
+                        <li><strong>AgentSystem.ServiceDefaults</strong>: Default service configurations</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <div id="archChart" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Section -->
+    <section class="section api-section" id="api">
+        <div class="container">
+            <h2 class="text-center mb-5">API Documentation</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>REST API</h3>
+                    <p>AgentSystem provides a comprehensive REST API for interacting with agents:</p>
+                    <div class="code-block">
+<pre>POST /api/assessment
+Content-Type: application/json
+
+{
+  "metaReflection": { ... },
+  "multiModalOutput": { ... },
+  "embodiedCognitionOutput": { ... },
+  "gestureOutput": { ... },
+  "voiceOutput": { ... },
+  "crossModalFeedback": { ... },
+  "educationalOutput": { ... }
+}</pre>
+                    </div>
+                    <p>See the full API documentation in our <a href="./swagger" target="_blank">Swagger UI</a>.</p>
+                </div>
+                <div class="col-lg-6">
+                    <h3>Client Integration</h3>
+                    <p>Example of client-side integration with the AgentSystem API:</p>
+                    <div class="code-block">
+<pre>// Client-side integration
+using var client = new HttpClient();
+client.BaseAddress = new Uri("https://agent-api.example.com/");
+
+var assessmentRequest = new AssessmentInput
+{
+    MultiModalOutput = captureMultiModalOutput(),
+    EmbodiedCognitionOutput = captureEmbodiedOutput(),
+    // ... other outputs
+};
+
+var response = await client.PostAsJsonAsync(
+    "api/assessment", 
+    assessmentRequest
+);
+var result = await response.Content
+    .ReadFromJsonAsync&lt;AssessmentResult&gt;();</pre>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="./swagger" class="btn btn-primary btn-lg" target="_blank">
+                    <i class="k-icon k-i-file-txt"></i> 
+                    View Full API Documentation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="section" id="getting-started">
+        <div class="container">
+            <h2 class="text-center mb-5">Getting Started</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li>.NET 9.0 SDK</li>
+                        <li>Visual Studio 2022 or later / VS Code</li>
+                        <li>Docker Desktop (for local development)</li>
+                        <li>SQL Server (local or remote)</li>
+                    </ul>
+                    
+                    <h3 class="mt-4">Installation</h3>
+                    <div class="code-block">
+<pre># Clone the repository
+git clone https://github.com/TooensureAI/AgentSystem.git
+cd AgentSystem
+
+# Restore dependencies
+dotnet restore AgentSystem.sln
+
+# Build the solution
+dotnet build AgentSystem.sln</pre>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3>Running the Applications</h3>
+                    <div class="code-block">
+<pre># Run the web application
+dotnet run --project AgentSystem.Web/AgentSystem.Web.csproj
+
+# Run the mobile application (requires emulator/device)
+dotnet run --project AgentSystem.Mobile/AgentSystem.Mobile.csproj
+
+# Run the AppHost (for microservices architecture)
+dotnet run --project AgentSystem.AppHost/AgentSystem.AppHost.csproj</pre>
+                    </div>
+                    
+                    <h3 class="mt-4">Configuration</h3>
+                    <p>Edit the <code>appsettings.json</code> file in the AppHost project to configure your environment:</p>
+                    <div class="code-block">
+<pre>{
+  "Aspire": {
+    "Dashboard": {
+      "Enabled": true,
+      "Port": 18888
+    }
+  },
+  "Assessment": {
+    "ValidationThresholds": {
+      "EthicalScore": 0.8,
+      "SemanticCoherenceScore": 0.7
+      // Other settings...
+    }
+  }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>AgentSystem</h4>
+                    <p>A comprehensive .NET-based framework for building and orchestrating autonomous agents.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#features" class="text-white">Features</a></li>
+                        <li><a href="#architecture" class="text-white">Architecture</a></li>
+                        <li><a href="#api" class="text-white">API</a></li>
+                        <li><a href="#getting-started" class="text-white">Getting Started</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://github.com/TooensureAI/AgentSystem" class="text-white">GitHub</a></li>
+                        <li><a href="./swagger" class="text-white">API Documentation</a></li>
+                        <li><a href="#" class="text-white">Tutorials</a></li>
+                        <li><a href="#" class="text-white">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4" style="background-color: rgba(255,255,255,0.2);">
+            <div class="text-center">
+                <p>&copy; 2025 TooensureAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Telerik Kendo UI JS -->
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.1.314/js/kendo.all.min.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize architecture chart
+            $("#archChart").kendoChart({
+                title: {
+                    text: "AgentSystem Components"
+                },
+                legend: {
+                    position: "bottom"
+                },
+                series: [{
+                    type: "pie",
+                    data: [
+                        { category: "Core", value: 30 },
+                        { category: "Plugins", value: 25 },
+                        { category: "Web/Mobile", value: 20 },
+                        { category: "AppHost", value: 15 },
+                        { category: "ServiceDefaults", value: 10 }
+                    ]
+                }],
+                tooltip: {
+                    visible: true,
+                    template: "#= category #: #= value #%"
+                }
+            });
+        });
+    </script>
+</body>
+</html>

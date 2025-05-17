@@ -1,0 +1,1007 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "AgentSystem API",
+    "description": "REST API for the AgentSystem autonomous agent framework",
+    "contact": {
+      "name": "TooensureAI",
+      "url": "https://github.com/TooensureAI/AgentSystem",
+      "email": "support@tooensureai.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.agentsystem.tooensureai.com/v1",
+      "description": "Production API Server"
+    },
+    {
+      "url": "https://api-staging.agentsystem.tooensureai.com/v1",
+      "description": "Staging API Server"
+    },
+    {
+      "url": "http://localhost:5000/v1",
+      "description": "Local Development"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Agents",
+      "description": "Operations for managing agents"
+    },
+    {
+      "name": "Plugins",
+      "description": "Operations for managing plugins"
+    },
+    {
+      "name": "Assessment",
+      "description": "Operations for agent assessment and evaluation"
+    },
+    {
+      "name": "Templates",
+      "description": "Operations for managing agent templates"
+    }
+  ],
+  "paths": {
+    "/agents": {
+      "get": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Get all agents",
+        "description": "Returns a list of all registered agents",
+        "operationId": "getAgents",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Agent"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Create an agent",
+        "description": "Creates a new agent with the specified configuration",
+        "operationId": "createAgent",
+        "requestBody": {
+          "description": "Agent configuration",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{id}": {
+      "get": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Get an agent by ID",
+        "description": "Returns a specific agent by its ID",
+        "operationId": "getAgentById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Agent ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Update an agent",
+        "description": "Updates an existing agent with the specified configuration",
+        "operationId": "updateAgent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Agent ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Agent configuration",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Delete an agent",
+        "description": "Deletes a specific agent by its ID",
+        "operationId": "deleteAgent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Agent ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/agents/{id}/execute": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Execute an agent",
+        "description": "Executes an agent with the provided context",
+        "operationId": "executeAgent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Agent ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Execution context",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentContext"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/plugins": {
+      "get": {
+        "tags": [
+          "Plugins"
+        ],
+        "summary": "Get all plugins",
+        "description": "Returns a list of all registered plugins",
+        "operationId": "getPlugins",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Plugin"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/assessment": {
+      "post": {
+        "tags": [
+          "Assessment"
+        ],
+        "summary": "Evaluate agent output",
+        "description": "Evaluates agent outputs across multiple dimensions",
+        "operationId": "evaluateAgent",
+        "requestBody": {
+          "description": "Assessment input",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Agent": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the agent"
+          },
+          "name": {
+            "type": "string",
+            "description": "Descriptive name of the agent"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the agent's purpose and capabilities"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of capability identifiers available to this agent"
+          },
+          "plugins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of plugin identifiers loaded for this agent"
+          },
+          "templates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of template identifiers used by this agent"
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Custom configuration values"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the agent was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the agent was last updated"
+          }
+        }
+      },
+      "AgentCreate": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Descriptive name of the agent"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the agent's purpose and capabilities"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of agent to create"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of capability identifiers to assign to this agent"
+          },
+          "plugins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of plugin identifiers to load for this agent"
+          },
+          "templates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of template identifiers to use with this agent"
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Custom configuration values"
+          }
+        }
+      },
+      "AgentUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Descriptive name of the agent"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the agent's purpose and capabilities"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of capability identifiers to assign to this agent"
+          },
+          "plugins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of plugin identifiers to load for this agent"
+          },
+          "templates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of template identifiers to use with this agent"
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Custom configuration values"
+          }
+        }
+      },
+      "AgentContext": {
+        "type": "object",
+        "properties": {
+          "conversationId": {
+            "type": "string",
+            "description": "Identifier for the conversation"
+          },
+          "userId": {
+            "type": "string",
+            "description": "Identifier for the user"
+          },
+          "sessionId": {
+            "type": "string",
+            "description": "Identifier for the session"
+          },
+          "inputMessage": {
+            "$ref": "#/components/schemas/AgentMessage"
+          },
+          "conversationHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentMessage"
+            },
+            "description": "History of previous messages in the conversation"
+          },
+          "stateData": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "State information that persists across executions"
+          }
+        }
+      },
+      "AgentMessage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the message"
+          },
+          "senderId": {
+            "type": "string",
+            "description": "Identifier of the sender"
+          },
+          "recipientId": {
+            "type": "string",
+            "description": "Identifier of the recipient"
+          },
+          "content": {
+            "type": "string",
+            "description": "Message content"
+          },
+          "messageType": {
+            "type": "string",
+            "description": "Type of message",
+            "enum": [
+              "text",
+              "image",
+              "audio",
+              "video",
+              "file",
+              "command",
+              "event"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the message was created"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Additional metadata for the message"
+          }
+        }
+      },
+      "AgentResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/AgentMessage"
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Indicates whether the processing was successful"
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Error message, if any"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Additional data returned by the agent"
+          }
+        }
+      },
+      "Plugin": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the plugin"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the plugin"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of what the plugin does"
+          },
+          "version": {
+            "type": "string",
+            "description": "Version of the plugin"
+          },
+          "functions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PluginFunction"
+            },
+            "description": "Functions provided by the plugin"
+          }
+        }
+      },
+      "PluginFunction": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the function"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of what the function does"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PluginFunctionParameter"
+            },
+            "description": "Parameters for the function"
+          },
+          "returnDescription": {
+            "type": "string",
+            "description": "Description of the return value"
+          },
+          "isAsync": {
+            "type": "boolean",
+            "description": "Indicates whether the function executes asynchronously"
+          }
+        }
+      },
+      "PluginFunctionParameter": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the parameter"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the parameter"
+          },
+          "type": {
+            "type": "string",
+            "description": "Data type of the parameter",
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array"
+            ]
+          },
+          "isRequired": {
+            "type": "boolean",
+            "description": "Indicates whether the parameter is required"
+          },
+          "defaultValue": {
+            "description": "Default value for the parameter"
+          }
+        }
+      },
+      "AssessmentInput": {
+        "type": "object",
+        "properties": {
+          "metaReflection": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Meta-reflection data"
+          },
+          "multiModalOutput": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Multi-modal output data"
+          },
+          "embodiedCognitionOutput": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Embodied cognition output data"
+          },
+          "gestureOutput": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Gesture output data"
+          },
+          "voiceOutput": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Voice output data"
+          },
+          "crossModalFeedback": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Cross-modal feedback data"
+          },
+          "educationalOutput": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Educational output data"
+          },
+          "mcpServerOutput": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "MCP server output data"
+          },
+          "workflowComplianceOutput": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Workflow compliance output data"
+          },
+          "thoughtChain": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Thought chain data"
+          },
+          "systemState": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "System state data"
+          }
+        }
+      },
+      "AssessmentResult": {
+        "type": "object",
+        "properties": {
+          "assessment": {
+            "type": "object",
+            "properties": {
+              "gaps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Identified gaps in agent performance"
+              },
+              "opportunities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Identified opportunities for improvement"
+              },
+              "ethical_score": {
+                "type": "number",
+                "format": "float",
+                "description": "Score for alignment with ethical AI principles"
+              },
+              "semantic_coherence_score": {
+                "type": "number",
+                "format": "float",
+                "description": "Score for logical consistency across outputs"
+              },
+              "emotional_coherence_score": {
+                "type": "number",
+                "format": "float",
+                "description": "Score for consistency of emotional signals"
+              },
+              "tutorial_effectiveness_score": {
+                "type": "number",
+                "format": "float",
+                "description": "Score for efficacy of learning content"
+              },
+              "server_performance_score": {
+                "type": "number",
+                "format": "float",
+                "description": "Score for backend processing efficiency"
+              },
+              "workflow_compliance_score": {
+                "type": "number",
+                "format": "float",
+                "description": "Score for adherence to development standards"
+              },
+              "workflow_compliance_details": {
+                "type": "object",
+                "properties": {
+                  "branch_compliance_score": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "commit_compliance_score": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "pr_compliance_score": {
+                    "type": "number",
+                    "format": "float"
+                  }
+                }
+              },
+              "emotion_prediction_accuracy": {
+                "type": "number",
+                "format": "float",
+                "description": "Score for accuracy of emotional forecasting"
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
