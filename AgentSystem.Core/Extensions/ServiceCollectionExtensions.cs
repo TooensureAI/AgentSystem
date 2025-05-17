@@ -16,7 +16,11 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddAgentSystem(this IServiceCollection services, IConfiguration configuration)
     {
         // Add configuration
-        services.Configure<AgentSystemConfiguration>(configuration.GetSection("AgentSystem"));
+        var section = configuration.GetSection("AgentSystem");
+        services.Configure<AgentSystemConfiguration>(options => 
+        {
+            section.Bind(options);
+        });
         
         // Add core services
         services.AddSingleton<AgentService>();

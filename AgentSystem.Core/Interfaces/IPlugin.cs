@@ -1,3 +1,5 @@
+using AgentSystem.Core.Models;
+
 namespace AgentSystem.Core.Interfaces;
 
 /// <summary>
