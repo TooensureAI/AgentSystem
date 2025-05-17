@@ -1,0 +1,81 @@
+{
+  "plugin": {
+    "name": "PlannerPlugin",
+    "version": "1.0.0",
+    "description": "Plugin for generating and optimizing execution plans",
+    "author": "ThoughtTransfer Team",
+    "capabilities": [
+      "task_decomposition",
+      "dependency_analysis",
+      "resource_allocation",
+      "execution_planning",
+      "progress_tracking"
+    ]
+  },
+  "configuration": {
+    "planning_strategies": [
+      "sequential",
+      "parallel",
+      "hierarchical",
+      "adaptive"
+    ],
+    "default_strategy": "adaptive",
+    "optimization_targets": [
+      "time",
+      "resource_usage",
+      "quality",
+      "cost"
+    ],
+    "default_optimization": "time"
+  },
+  "integration": {
+    "semantic_kernel": {
+      "plugin_type": "native",
+      "functions": [
+        {
+          "name": "CreatePlan",
+          "description": "Creates an execution plan based on tasks and constraints",
+          "input_schema": {
+            "tasks": "array",
+            "constraints": "object",
+            "optimization_target": "string"
+          },
+          "output_schema": {
+            "plan": "object",
+            "estimated_metrics": "object"
+          }
+        },
+        {
+          "name": "OptimizePlan",
+          "description": "Optimizes an existing plan based on new constraints or targets",
+          "input_schema": {
+            "plan": "object",
+            "new_constraints": "object",
+            "optimization_target": "string"
+          },
+          "output_schema": {
+            "optimized_plan": "object",
+            "improvement_metrics": "object"
+          }
+        },
+        {
+          "name": "TrackProgress",
+          "description": "Tracks and reports progress of plan execution",
+          "input_schema": {
+            "plan": "object",
+            "completed_tasks": "array",
+            "current_status": "object"
+          },
+          "output_schema": {
+            "progress": "object",
+            "recommendations": "array"
+          }
+        }
+      ]
+    },
+    "dotnet": {
+      "namespace": "ThoughtTransfer.Plugins.Planning",
+      "assembly": "ThoughtTransfer.Plugins.Planning.dll"
+    }
+  }
+} 

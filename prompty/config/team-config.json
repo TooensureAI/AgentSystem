@@ -1,0 +1,92 @@
+{
+  "team_compositions": {
+    "software_development_team": {
+      "name": "Software Development Team",
+      "description": "A balanced team for software development projects",
+      "orchestrator": {
+        "template": "team_orchestrator",
+        "params": {
+          "orchestratorName": "Alex",
+          "orchestratorSpecialty": "Software Development Coordination",
+          "orchestratorCommunicationStyle": "Clear, concise, and collaborative"
+        }
+      },
+      "members": [
+        {
+          "template": "developer",
+          "role": "Backend Developer",
+          "params": {
+            "name": "Dave",
+            "technicalSpecialties": ["C#", ".NET", "Microservices", "API Design"]
+          }
+        },
+        {
+          "template": "developer",
+          "role": "Frontend Developer",
+          "params": {
+            "name": "Fiona",
+            "technicalSpecialties": ["React", "TypeScript", "UI/UX", "Responsive Design"]
+          }
+        },
+        {
+          "template": "architect",
+          "role": "Solution Architect",
+          "params": {
+            "name": "Anna"
+          }
+        },
+        {
+          "template": "qa_tester",
+          "role": "QA Engineer",
+          "params": {
+            "name": "Quinn"
+          }
+        }
+      ]
+    },
+    "data_product_team": {
+      "name": "Data Product Team",
+      "description": "A specialized team for data-driven product development",
+      "orchestrator": {
+        "template": "team_orchestrator",
+        "params": {
+          "orchestratorName": "Morgan",
+          "orchestratorSpecialty": "Data Product Development",
+          "orchestratorCommunicationStyle": "Analytical and collaborative"
+        }
+      },
+      "members": [
+        {
+          "template": "data_scientist",
+          "role": "Lead Data Scientist",
+          "params": {
+            "name": "Dana"
+          }
+        },
+        {
+          "template": "developer",
+          "role": "Data Engineer",
+          "params": {
+            "name": "Derek",
+            "technicalSpecialties": ["Python", "SQL", "ETL", "Data Pipelines"]
+          }
+        },
+        {
+          "template": "product_manager",
+          "role": "Product Manager",
+          "params": {
+            "name": "Priya"
+          }
+        },
+        {
+          "template": "developer",
+          "role": "Full-Stack Developer",
+          "params": {
+            "name": "Fareed",
+            "technicalSpecialties": ["JavaScript", "Python", "React", "Flask"]
+          }
+        }
+      ]
+    }
+  }
+}

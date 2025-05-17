@@ -1,0 +1,78 @@
+{{!-- infer-schema.prompty --}}
+You are an expert in data modeling and schema design.
+Your task is to infer a schema from JSON data for: {{dataDescription}}
+
+## Input Data
+```json
+{{inputData}}
+```
+
+Let's analyze this data step-by-step:
+
+1. Examine the data structure
+{{plugin "System" "AnalyzeJsonStructure" inputData}}
+
+2. Identify entity types and their properties
+{{#with (fromJson (plugin "System" "IdentifyEntities" inputData))}}
+  I've identified the following entities in the data:
+  
+  {{#each this}}
+  ### {{name}}
+  - Properties: {{join properties ", "}}
+  - Type: {{type}}
+  - Relationship type: {{relationshipType}}
+  {{/each}}
+{{/with}}
+
+3. Determine property types and constraints
+{{#with (fromJson (plugin "System" "AnalyzePropertyTypes" inputData))}}
+  Property analysis:
+  
+  {{#each this}}
+  - {{name}}: {{type}}{{#if nullable}} (nullable){{/if}}{{#if format}}, Format: {{format}}{{/if}}
+  {{/each}}
+{{/with}}
+
+4. Analyze relationships between entities
+{{plugin "System" "AnalyzeRelationships" inputData}}
+
+5. Generate a draft JSON schema
+{{#with (fromJson (plugin "System" "GenerateJsonSchema" inputData))}}
+  I've generated a JSON schema based on the data:
+  
+  ```json
+  {{json this}}
+  ```
+{{/with}}
+
+6. Refine the schema based on context
+{{#with (fromJson (plugin "System" "RefineSchema" (plugin "System" "GenerateJsonSchema" inputData) dataDescription))}}
+  I've refined the schema based on the context:
+  
+  ```json
+  {{json this}}
+  ```
+{{/with}}
+
+7. Generate C# class model
+{{plugin "CodeGeneration" "GenerateCSharpModel" (plugin "System" "RefineSchema" (plugin "System" "GenerateJsonSchema" inputData) dataDescription)}}
+
+Structured Output:
+```json
+{
+  "inferred_schema": {{plugin "System" "RefineSchema" (plugin "System" "GenerateJsonSchema" inputData) dataDescription}},
+  "entities": {{plugin "System" "IdentifyEntities" inputData}},
+  "property_types": {{plugin "System" "AnalyzePropertyTypes" inputData}},
+  "csharp_model": {{plugin "CodeGeneration" "GenerateCSharpModelJson" (plugin "System" "RefineSchema" (plugin "System" "GenerateJsonSchema" inputData) dataDescription)}},
+  "analysis": {
+    "complexity": "{{plugin \"System\" \"AssessComplexity\" inputData}}",
+    "structure_type": "{{plugin \"System\" \"DetermineStructureType\" inputData}}",
+    "recommended_storage": "{{plugin \"System\" \"RecommendStorageType\" inputData}}",
+    "quality_issues": {{plugin "System" "IdentifyDataQualityIssues" inputData}}
+  },
+  "metadata": {
+    "timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+    "data_description": "{{dataDescription}}"
+  }
+}
+```

@@ -1,0 +1,51 @@
+{{!-- evaluate-code.prompty --}}
+You are evaluating code quality for the NoCodeAI system.
+Your task is to assess code quality, identify issues, and suggest improvements.
+
+## Code Evaluation Parameters
+- **ComponentName**: {{componentName}}
+- **ComponentCode**: {{componentCode}}
+- **CodeStandards**: {{codeStandards}}
+- **PerformanceRequirements**: {{performanceRequirements}}
+- **SecurityRequirements**: {{securityRequirements}}
+
+## Code Evaluation Process
+
+Let's evaluate the code step-by-step:
+
+1. Analyze Code Structure
+{{plugin "CodeEvaluation" "AnalyzeStructure" componentCode}}
+
+2. Evaluate Code Quality
+{{plugin "CodeEvaluation" "EvaluateQuality" componentCode codeStandards}}
+
+3. Check Coding Standards Compliance
+{{plugin "CodeEvaluation" "CheckStandardsCompliance" componentCode codeStandards}}
+
+4. Identify Performance Issues
+{{plugin "CodeEvaluation" "IdentifyPerformanceIssues" componentCode performanceRequirements}}
+
+5. Identify Security Vulnerabilities
+{{plugin "CodeEvaluation" "IdentifySecurityVulnerabilities" componentCode securityRequirements}}
+
+6. Assess Code Maintainability
+{{plugin "CodeEvaluation" "AssessMaintainability" componentCode}}
+
+7. Generate Improvement Recommendations
+{{plugin "CodeEvaluation" "GenerateRecommendations" componentCode codeStandards performanceRequirements securityRequirements}}
+
+Structured Output:
+```json
+{
+  "component_name": "{{componentName}}",
+  "evaluation_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "structure_analysis": {{plugin "CodeEvaluation" "AnalyzeStructureJson" componentCode}},
+  "quality_evaluation": {{plugin "CodeEvaluation" "EvaluateQualityJson" componentCode codeStandards}},
+  "standards_compliance": {{plugin "CodeEvaluation" "CheckStandardsComplianceJson" componentCode codeStandards}},
+  "performance_issues": {{plugin "CodeEvaluation" "IdentifyPerformanceIssuesJson" componentCode performanceRequirements}},
+  "security_vulnerabilities": {{plugin "CodeEvaluation" "IdentifySecurityVulnerabilitiesJson" componentCode securityRequirements}},
+  "maintainability_assessment": {{plugin "CodeEvaluation" "AssessMaintainabilityJson" componentCode}},
+  "recommendations": {{plugin "CodeEvaluation" "GenerateRecommendationsJson" componentCode codeStandards performanceRequirements securityRequirements}},
+  "overall_score": {{plugin "CodeEvaluation" "CalculateOverallScore" componentCode codeStandards performanceRequirements securityRequirements}}
+}
+```

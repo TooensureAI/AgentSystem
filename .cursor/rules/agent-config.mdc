@@ -1,0 +1,49 @@
+# Agent Configuration
+
+## Templates
+agent_template: |
+  /**
+   * @class {className}
+   * @description {description}
+   * @implements {interfaces}
+   */
+  public class {className} : IAgent
+  {
+      private readonly ILogger<{className}> _logger;
+
+      public {className}(ILogger<{className}> logger)
+      {
+          _logger = logger;
+      }
+
+      public async Task ExecuteAsync()
+      {
+          // Agent implementation
+      }
+  }
+
+plugin_template: |
+  /**
+   * @class {className}
+   * @description {description}
+   * @implements {interfaces}
+   */
+  public class {className} : IPlugin
+  {
+      private readonly ILogger<{className}> _logger;
+
+      public {className}(ILogger<{className}> logger)
+      {
+          _logger = logger;
+      }
+
+      public async Task InitializeAsync()
+      {
+          // Plugin initialization
+      }
+  }
+
+## Project Structure
+agent_path: AgentSystem.Core/Agents
+plugin_path: AgentSystem.Plugins
+core_path: AgentSystem.Core

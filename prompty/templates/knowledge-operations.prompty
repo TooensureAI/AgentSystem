@@ -1,0 +1,64 @@
+{{!-- knowledge-operations.prompty --}}
+You are an expert in knowledge management and information organization.
+Your task is to process the following {{operation_type}} operation: {{input}}
+
+Let's approach this step-by-step:
+
+1. First, let's analyze what we're working with
+{{#if (eq operation_type "extraction")}}
+  I'll extract key knowledge from the provided text:
+  {{plugin "KnowledgePlugin" "ExtractKnowledge" text=input source=source}}
+{{else if (eq operation_type "query")}}
+  I'll search the knowledge graph for relevant information:
+  {{plugin "KnowledgePlugin" "Search" input}}
+{{else if (eq operation_type "question")}}
+  I'll answer this question using the knowledge graph:
+  {{plugin "KnowledgePlugin" "AnswerQuestion" input}}
+{{else if (eq operation_type "summarize")}}
+  I'll generate a summary of knowledge on this topic:
+  {{plugin "KnowledgePlugin" "SummarizeKnowledge" input}}
+{{else}}
+  I'll need to determine what operation to perform based on the input.
+  {{plugin "ReasoningPlugin" "AnalyzeProblem" input}}
+{{/if}}
+
+2. Based on my analysis, let me provide structured insights
+{{#if (eq operation_type "extraction")}}
+  Knowledge has been extracted and stored in the graph. Here's what I found:
+  
+  {{plugin "ReasoningPlugin" "SynthesizeConclusion" (plugin "KnowledgePlugin" "Search" input)}}
+{{else if (eq operation_type "query")}}
+  Here's what I found in the knowledge graph:
+  
+  {{plugin "ReasoningPlugin" "SynthesizeConclusion" (plugin "KnowledgePlugin" "Search" input)}}
+{{else if (eq operation_type "question")}}
+  To answer this question comprehensively, I'll synthesize information from the knowledge graph.
+  
+  {{plugin "ReasoningPlugin" "SynthesizeConclusion" (plugin "KnowledgePlugin" "AnswerQuestion" input)}}
+{{else if (eq operation_type "summarize")}}
+  Here's a comprehensive summary based on the knowledge graph:
+  
+  {{plugin "KnowledgePlugin" "SummarizeKnowledge" input}}
+{{else}}
+  Based on my analysis, I recommend the following approach:
+  
+  {{plugin "ReasoningPlugin" "GenerateRecommendations" input}}
+{{/if}}
+
+3. Now, let me organize the information coherently
+{{plugin "ReasoningPlugin" "ApplyStrategy" (fromJson (plugin "ReasoningPlugin" "SelectStrategy" input))}}
+
+Structured Output:
+```json
+{
+  "operation_type": "{{operation_type}}",
+  "input": "{{input}}",
+  "result": "{{plugin \"ReasoningPlugin\" \"FormConclusion\" input}}",
+  "confidence": {{plugin "ReasoningPlugin" "CalculateConfidence" input}},
+  "next_steps": [
+    {{#each (fromJson (plugin "ReasoningPlugin" "GenerateRecommendations" input))}}
+    {"id": "{{id}}", "description": "{{description}}"}{{#unless @last}},{{/unless}}
+    {{/each}}
+  ]
+}
+```

@@ -1,0 +1,51 @@
+{{!-- self-improvement.prompty --}}
+You are an expert in system optimization and continuous improvement.
+Your task is to analyze the system's performance and suggest improvements for: {{improvement_area}}
+
+Let's approach this step-by-step:
+
+1. First, let's analyze the current state of the system
+{{#if (eq improvement_area "system_health")}}
+  {{plugin "SelfImprovementPlugin" "AnalyzeSystemHealth"}}
+{{else if (eq improvement_area "templates")}}
+  {{plugin "SelfImprovementPlugin" "OptimizeTemplates"}}
+{{else if (eq improvement_area "workflow")}}
+  {{plugin "SelfImprovementPlugin" "AnalyzeWorkflow" workflow_name}}
+{{else if (eq improvement_area "strategy")}}
+  {{plugin "SelfImprovementPlugin" "AnalyzeStrategy" strategy_name}}
+{{else}}
+  {{plugin "SelfImprovementPlugin" "GenerateImprovementPlan"}}
+{{/if}}
+
+2. Based on this analysis, let me identify the key insights and patterns
+{{plugin "ReasoningPlugin" "ApplyStrategy" (fromJson (plugin "ReasoningPlugin" "SelectStrategy" improvement_area))}}
+
+3. Now, let me synthesize these insights into actionable recommendations
+{{plugin "ReasoningPlugin" "SynthesizeConclusion" improvement_area}}
+
+4. Let's determine implementation priorities and create an execution plan
+{{#each (fromJson (plugin "ReasoningPlugin" "GenerateRecommendations" improvement_area))}}
+   - {{id}}: {{description}}
+   - Priority: {{#if (eq id "R1")}}High{{else if (eq id "R2")}}Medium{{else}}Low{{/if}}
+   - Implementation approach: {{plugin "ReasoningPlugin" "FormConclusion" description}}
+{{/each}}
+
+5. Finally, let's establish metrics to measure improvement effectiveness
+{{plugin "KnowledgePlugin" "Search" (concat "metrics for " improvement_area)}}
+
+Structured Output:
+```json
+{
+  "improvement_area": "{{improvement_area}}",
+  "current_state": "{{plugin \"ReasoningPlugin\" \"SummarizeStep\" 1}}",
+  "key_insights": "{{plugin \"ReasoningPlugin\" \"SummarizeStep\" 2}}",
+  "recommendations": [
+    {{#each (fromJson (plugin "ReasoningPlugin" "GenerateRecommendations" improvement_area))}}
+    {"id": "{{id}}", "description": "{{description}}"}{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "implementation_plan": "{{plugin \"ReasoningPlugin\" \"SummarizeStep\" 4}}",
+  "success_metrics": "{{plugin \"ReasoningPlugin\" \"SummarizeStep\" 5}}",
+  "confidence": {{plugin "ReasoningPlugin" "CalculateConfidence" improvement_area}}
+}
+```

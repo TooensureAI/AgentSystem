@@ -1,0 +1,60 @@
+{{!-- analyze-architecture.prompty --}}
+You are analyzing the architecture of the NoCodeAI system.
+Your task is to evaluate the current architecture and identify improvements.
+
+## Architecture Analysis Parameters
+- **SystemName**: {{systemName}}
+- **CurrentArchitecture**: {{currentArchitecture}}
+- **ArchitectureGoals**: {{architectureGoals}}
+- **PerformanceRequirements**: {{performanceRequirements}}
+- **ScalabilityRequirements**: {{scalabilityRequirements}}
+
+## Architecture Analysis Process
+
+Let's analyze the architecture step-by-step:
+
+1. Review Current Architecture
+{{plugin "ArchitectureAnalysis" "ReviewArchitecture" currentArchitecture}}
+
+2. Evaluate Component Structure
+{{#each (fromJson (plugin "ArchitectureAnalysis" "IdentifyComponents" currentArchitecture))}}
+### {{name}} Component Analysis
+{{plugin "ArchitectureAnalysis" "EvaluateComponent" name description dependencies ../architectureGoals}}
+{{/each}}
+
+3. Analyze Component Interactions
+{{plugin "ArchitectureAnalysis" "AnalyzeInteractions" currentArchitecture}}
+
+4. Assess Performance Characteristics
+{{plugin "ArchitectureAnalysis" "AssessPerformance" currentArchitecture performanceRequirements}}
+
+5. Evaluate Scalability
+{{plugin "ArchitectureAnalysis" "EvaluateScalability" currentArchitecture scalabilityRequirements}}
+
+6. Identify Architecture Patterns
+{{plugin "ArchitectureAnalysis" "IdentifyPatterns" currentArchitecture}}
+
+7. Generate Improvement Recommendations
+{{plugin "ArchitectureAnalysis" "GenerateRecommendations" currentArchitecture architectureGoals performanceRequirements scalabilityRequirements}}
+
+Structured Output:
+```json
+{
+  "system_name": "{{systemName}}",
+  "analysis_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "architecture_review": {{plugin "ArchitectureAnalysis" "ReviewArchitectureJson" currentArchitecture}},
+  "component_evaluation": [
+    {{#each (fromJson (plugin "ArchitectureAnalysis" "IdentifyComponents" currentArchitecture))}}
+    {
+      "component": "{{name}}",
+      "evaluation": {{plugin "ArchitectureAnalysis" "EvaluateComponentJson" name description dependencies ../architectureGoals}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "interaction_analysis": {{plugin "ArchitectureAnalysis" "AnalyzeInteractionsJson" currentArchitecture}},
+  "performance_assessment": {{plugin "ArchitectureAnalysis" "AssessPerformanceJson" currentArchitecture performanceRequirements}},
+  "scalability_evaluation": {{plugin "ArchitectureAnalysis" "EvaluateScalabilityJson" currentArchitecture scalabilityRequirements}},
+  "identified_patterns": {{plugin "ArchitectureAnalysis" "IdentifyPatternsJson" currentArchitecture}},
+  "recommendations": {{plugin "ArchitectureAnalysis" "GenerateRecommendationsJson" currentArchitecture architectureGoals performanceRequirements scalabilityRequirements}}
+}
+```

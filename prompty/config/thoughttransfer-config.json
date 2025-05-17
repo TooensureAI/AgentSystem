@@ -1,0 +1,42 @@
+{
+  "system": {
+    "name": "ThoughtTransfer_v1",
+    "version": "1.0.0",
+    "description": "Advanced thought transfer system with Semantic Kernel and .NET Aspire integration",
+    "capabilities": [
+      "init_system.prompty",
+      "plugin_management",
+      "basic_automation",
+      "semantic_kernel_agent_framework",
+      "dotnet_aspire",
+      "telerik_ui",
+      "microsoft_extensions_ai",
+      "hybird agent approach architecture"
+    ]
+  },
+  "plugins": {
+    "core": [
+      "PlannerPlugin",
+      "MakerPlugin",
+      "CheckerPlugin",
+      "RefectorPlugin"
+    ]
+  },
+  "prompty": {
+    "template_engine": "handlebars",
+    "default_extensions": [
+      ".prompty"
+    ],
+    "structured_output_format": "json"
+  },
+  "ai": {
+    "model": "claude-3-7-sonnet-20240219",
+    "max_tokens": 8192,
+    "temperature": 0.7
+  },
+  "monitoring": {
+    "telemetry": true,
+    "log_level": "Information",
+    "performance_tracking": true
+  }
+} 

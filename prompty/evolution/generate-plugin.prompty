@@ -1,0 +1,81 @@
+{{!-- generate-plugin.prompty --}}
+You are generating a new plugin for the NoCodeAI system.
+Your task is to design and implement a plugin that addresses a specific capability gap.
+
+## Plugin Generation Parameters
+- **PluginName**: {{pluginName}}
+- **PluginPurpose**: {{pluginPurpose}}
+- **RequiredFunctions**: {{requiredFunctions}}
+- **IntegrationPoints**: {{integrationPoints}}
+- **PerformanceRequirements**: {{performanceRequirements}}
+
+## Plugin Generation Process
+
+Let's generate the plugin step-by-step:
+
+1. Define Plugin Structure
+{{plugin "PluginGeneration" "DefinePluginStructure" pluginName pluginPurpose}}
+
+2. Design Required Functions
+{{#each requiredFunctions}}
+### {{name}} Function
+{{plugin "PluginGeneration" "DesignFunction" name description parameters returnType ../pluginName}}
+{{/each}}
+
+3. Implement Function Logic
+{{#each requiredFunctions}}
+### {{name}} Implementation
+```csharp
+{{plugin "PluginGeneration" "ImplementFunction" name description parameters returnType ../pluginName ../pluginPurpose}}
+```
+{{/each}}
+
+4. Define Integration Points
+{{#each integrationPoints}}
+### {{name}} Integration
+{{plugin "PluginGeneration" "DefineIntegration" name target method ../pluginName}}
+{{/each}}
+
+5. Implement Plugin Registration
+```csharp
+{{plugin "PluginGeneration" "ImplementPluginRegistration" pluginName requiredFunctions}}
+```
+
+6. Create Plugin Configuration
+```json
+{{plugin "PluginGeneration" "GeneratePluginConfig" pluginName pluginPurpose requiredFunctions integrationPoints}}
+```
+
+Structured Output:
+```json
+{
+  "plugin_name": "{{pluginName}}",
+  "plugin_purpose": "{{pluginPurpose}}",
+  "plugin_structure": {{plugin "PluginGeneration" "DefinePluginStructureJson" pluginName pluginPurpose}},
+  "functions": [
+    {{#each requiredFunctions}}
+    {
+      "name": "{{name}}",
+      "description": "{{description}}",
+      "parameters": {{#if parameters}}{{json parameters}}{{else}}[]{{/if}},
+      "return_type": "{{returnType}}",
+      "implementation": "{{plugin \"PluginGeneration\" \"ImplementFunctionJson\" name description parameters returnType ../pluginName ../pluginPurpose}}"
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "integration_points": [
+    {{#each integrationPoints}}
+    {
+      "name": "{{name}}",
+      "target": "{{target}}",
+      "method": "{{method}}",
+      "configuration": {{plugin "PluginGeneration" "DefineIntegrationJson" name target method ../pluginName}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "plugin_files": {
+    "implementation": "{{pluginName}}.cs",
+    "configuration": "{{pluginName}}.json"
+  }
+}
+```

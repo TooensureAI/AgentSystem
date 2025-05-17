@@ -1,0 +1,86 @@
+{{!-- generate-documentation.prompty --}}
+You are an expert documentation generator for the NoCodeAI system.
+Your task is to generate comprehensive documentation for the provided code and architecture.
+
+## Documentation Generation Parameters
+- **ProjectName**: {{projectName}}
+- **ComponentName**: {{componentName}}
+- **ComponentCode**: {{componentCode}}
+- **ArchitectureDescription**: {{architectureDescription}}
+- **DocumentationType**: {{documentationType}}
+- **AudienceLevel**: {{audienceLevel}}
+
+## Documentation Generation Process
+
+Let's generate the documentation step-by-step:
+
+1. Analyze Component Code
+{{plugin "DocumentationGeneration" "AnalyzeComponent" componentName componentCode}}
+
+2. Extract API Surface
+{{plugin "DocumentationGeneration" "ExtractAPIDefinitions" componentCode}}
+
+3. Extract Class Structure
+{{plugin "DocumentationGeneration" "ExtractClassStructure" componentCode}}
+
+4. Generate Overview Section
+{{plugin "DocumentationGeneration" "GenerateOverview" projectName componentName architectureDescription}}
+
+5. Generate API Documentation
+{{#each (fromJson (plugin "DocumentationGeneration" "ExtractAPIDefinitions" componentCode))}}
+### {{name}} API Reference
+```markdown
+{{plugin "DocumentationGeneration" "GenerateAPIDoc" name signature description parameters returnType ../componentName ../audienceLevel}}
+```
+{{/each}}
+
+6. Generate Class Documentation
+{{#each (fromJson (plugin "DocumentationGeneration" "ExtractClassStructure" componentCode))}}
+### {{name}} Class Reference
+```markdown
+{{plugin "DocumentationGeneration" "GenerateClassDoc" name properties methods ../componentName ../audienceLevel}}
+```
+{{/each}}
+
+7. Generate Usage Examples
+{{plugin "DocumentationGeneration" "GenerateUsageExamples" componentName (fromJson (plugin "DocumentationGeneration" "ExtractAPIDefinitions" componentCode)) audienceLevel}}
+
+8. Generate Architecture Diagrams
+{{#if (contains documentationType "diagrams")}}
+### Architecture Diagrams
+```markdown
+{{plugin "DocumentationGeneration" "GenerateArchitectureDiagrams" componentName architectureDescription}}
+```
+{{/if}}
+
+Structured Output:
+```json
+{
+  "project_name": "{{projectName}}",
+  "component_name": "{{componentName}}",
+  "documentation_type": "{{documentationType}}",
+  "audience_level": "{{audienceLevel}}",
+  "generated_documentation": {
+    "overview": "{{plugin \"DocumentationGeneration\" \"GenerateOverview\" projectName componentName architectureDescription}}",
+    "api_docs": [
+      {{#each (fromJson (plugin "DocumentationGeneration" "ExtractAPIDefinitions" componentCode))}}
+      {
+        "endpoint": "{{name}}",
+        "markdown": "{{plugin \"DocumentationGeneration\" \"GenerateAPIDocJson\" name signature description parameters returnType ../componentName ../audienceLevel}}"
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ],
+    "class_docs": [
+      {{#each (fromJson (plugin "DocumentationGeneration" "ExtractClassStructure" componentCode))}}
+      {
+        "class": "{{name}}",
+        "markdown": "{{plugin \"DocumentationGeneration\" \"GenerateClassDocJson\" name properties methods ../componentName ../audienceLevel}}"
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ],
+    "usage_examples": {{plugin "DocumentationGeneration" "GenerateUsageExamplesJson" componentName (fromJson (plugin "DocumentationGeneration" "ExtractAPIDefinitions" componentCode)) audienceLevel}},
+    "architecture_diagrams": {{#if (contains documentationType "diagrams")}}{{plugin "DocumentationGeneration" "GenerateArchitectureDiagramsJson" componentName architectureDescription}}{{else}}[]{{/if}}
+  },
+  "documentation_files": {{plugin "DocumentationGeneration" "GenerateFileStructure" projectName componentName documentationType}}
+}
+```

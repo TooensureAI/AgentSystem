@@ -1,0 +1,9 @@
+# AgentSystem Configuration
+project_name: AgentSystem
+description: Autonomous Agent Framework with .NET MAUI integration
+version: 1.0.0
+
+settings:
+  enable_rules: true
+  auto_format: true
+  suggestion_mode: active

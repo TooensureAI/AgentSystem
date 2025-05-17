@@ -1,0 +1,85 @@
+{{!-- deploy-solution.prompty --}}
+You are deploying the NoCodeAI system to a production environment.
+Your task is to create a comprehensive deployment strategy and implementation plan.
+
+## Deployment Parameters
+- **ProjectName**: {{projectName}}
+- **Components**: {{components}}
+- **DeploymentEnvironment**: {{deploymentEnvironment}}
+- **InfrastructureType**: {{infrastructureType}}
+- **DeploymentRequirements**: {{deploymentRequirements}}
+
+## Deployment Process
+
+Let's deploy the solution step-by-step:
+
+1. Analyze Deployment Requirements
+{{plugin "Deployment" "AnalyzeRequirements" deploymentRequirements}}
+
+2. Define Deployment Architecture
+{{plugin "Deployment" "DefineArchitecture" components deploymentEnvironment infrastructureType}}
+
+3. Create Infrastructure Setup
+{{#if (equals infrastructureType "azure")}}
+```bicep
+{{plugin "Deployment" "GenerateAzureInfrastructure" components deploymentRequirements}}
+```
+{{else if (equals infrastructureType "aws")}}
+```yaml
+{{plugin "Deployment" "GenerateAWSInfrastructure" components deploymentRequirements}}
+```
+{{else if (equals infrastructureType "kubernetes")}}
+```yaml
+{{plugin "Deployment" "GenerateKubernetesManifests" components deploymentRequirements}}
+```
+{{else}}
+```dockerfile
+{{plugin "Deployment" "GenerateDockerCompose" components deploymentRequirements}}
+```
+{{/if}}
+
+4. Create Deployment Pipeline
+{{#if (equals deploymentEnvironment "azure-devops")}}
+```yaml
+{{plugin "Deployment" "GenerateAzurePipeline" components infrastructureType}}
+```
+{{else if (equals deploymentEnvironment "github-actions")}}
+```yaml
+{{plugin "Deployment" "GenerateGitHubWorkflow" components infrastructureType}}
+```
+{{else}}
+```bash
+{{plugin "Deployment" "GenerateDeploymentScript" components infrastructureType}}
+```
+{{/if}}
+
+5. Configure Environment Variables
+```env
+{{plugin "Deployment" "GenerateEnvironmentVariables" components deploymentRequirements}}
+```
+
+6. Create Database Migration Scripts
+```sql
+{{plugin "Deployment" "GenerateDatabaseMigrations" components}}
+```
+
+7. Generate Deployment Documentation
+```markdown
+{{plugin "Deployment" "GenerateDeploymentDocumentation" projectName components deploymentEnvironment infrastructureType}}
+```
+
+Structured Output:
+```json
+{
+  "project_name": "{{projectName}}",
+  "deployment_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "requirements_analysis": {{plugin "Deployment" "AnalyzeRequirementsJson" deploymentRequirements}},
+  "deployment_architecture": {{plugin "Deployment" "DefineArchitectureJson" components deploymentEnvironment infrastructureType}},
+  "infrastructure_code": "{{#if (equals infrastructureType \"azure\")}}{{plugin \"Deployment\" \"GenerateAzureInfrastructureJson\" components deploymentRequirements}}{{else if (equals infrastructureType \"aws\")}}{{plugin \"Deployment\" \"GenerateAWSInfrastructureJson\" components deploymentRequirements}}{{else if (equals infrastructureType \"kubernetes\")}}{{plugin \"Deployment\" \"GenerateKubernetesManifestsJson\" components deploymentRequirements}}{{else}}{{plugin \"Deployment\" \"GenerateDockerComposeJson\" components deploymentRequirements}}{{/if}}",
+  "deployment_pipeline": "{{#if (equals deploymentEnvironment \"azure-devops\")}}{{plugin \"Deployment\" \"GenerateAzurePipelineJson\" components infrastructureType}}{{else if (equals deploymentEnvironment \"github-actions\")}}{{plugin \"Deployment\" \"GenerateGitHubWorkflowJson\" components infrastructureType}}{{else}}{{plugin \"Deployment\" \"GenerateDeploymentScriptJson\" components infrastructureType}}{{/if}}",
+  "environment_variables": "{{plugin \"Deployment\" \"GenerateEnvironmentVariablesJson\" components deploymentRequirements}}",
+  "database_migrations": "{{plugin \"Deployment\" \"GenerateDatabaseMigrationsJson\" components}}",
+  "deployment_documentation": "{{plugin \"Deployment\" \"GenerateDeploymentDocumentationJson\" projectName components deploymentEnvironment infrastructureType}}",
+  "deployment_files": {{plugin "Deployment" "ListDeploymentFilesJson" projectName components deploymentEnvironment infrastructureType}}
+}
+```

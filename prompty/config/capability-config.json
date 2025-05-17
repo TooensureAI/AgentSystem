@@ -1,0 +1,163 @@
+{
+  "capabilities": {
+    "prompty-processing": {
+      "name": "Prompty Processing",
+      "description": "Process template-based prompty files using Handlebars syntax",
+      "version": "1.0.0",
+      "dependencies": [
+        "template-processing"
+      ],
+      "metrics": {
+        "processing_time": {
+          "unit": "ms",
+          "target": "<500"
+        },
+        "template_complexity": {
+          "unit": "score",
+          "target": "<8.0"
+        }
+      }
+    },
+    "plugin-execution": {
+      "name": "Plugin Execution",
+      "description": "Execute plugins referenced from within prompty templates",
+      "version": "1.0.0",
+      "dependencies": [],
+      "metrics": {
+        "execution_time": {
+          "unit": "ms",
+          "target": "<1000"
+        },
+        "success_rate": {
+          "unit": "percentage",
+          "target": ">99.5"
+        }
+      }
+    },
+    "template-processing": {
+      "name": "Template Processing",
+      "description": "Process templates using Handlebars syntax",
+      "version": "1.0.0",
+      "dependencies": [],
+      "metrics": {
+        "processing_time": {
+          "unit": "ms",
+          "target": "<200"
+        },
+        "memory_usage": {
+          "unit": "MB",
+          "target": "<50"
+        }
+      }
+    },
+    "chain-of-thought-reasoning": {
+      "name": "Chain of Thought Reasoning",
+      "description": "Execute multi-step reasoning processes with AI models",
+      "version": "1.0.0",
+      "dependencies": [
+        "template-processing",
+        "plugin-execution"
+      ],
+      "metrics": {
+        "reasoning_steps": {
+          "unit": "count",
+          "target": "5-15"
+        },
+        "reasoning_quality": {
+          "unit": "score",
+          "target": ">8.0"
+        },
+        "token_efficiency": {
+          "unit": "tokens/step",
+          "target": "<500"
+        }
+      }
+    },
+    "structured-output": {
+      "name": "Structured Output",
+      "description": "Generate structured JSON output from prompty templates",
+      "version": "1.0.0",
+      "dependencies": [
+        "template-processing"
+      ],
+      "metrics": {
+        "validation_success": {
+          "unit": "percentage",
+          "target": ">99.9"
+        },
+        "schema_complexity": {
+          "unit": "score",
+          "target": "<7.0"
+        }
+      }
+    },
+    "code-generation": {
+      "name": "Code Generation",
+      "description": "Generate high-quality code from specifications",
+      "version": "1.0.0",
+      "dependencies": [
+        "chain-of-thought-reasoning",
+        "structured-output"
+      ],
+      "metrics": {
+        "code_quality": {
+          "unit": "score",
+          "target": ">8.5"
+        },
+        "compilation_success": {
+          "unit": "percentage",
+          "target": ">99.0"
+        },
+        "test_coverage": {
+          "unit": "percentage",
+          "target": ">90.0"
+        }
+      }
+    },
+    "architecture-design": {
+      "name": "Architecture Design",
+      "description": "Design scalable system architectures",
+      "version": "1.0.0",
+      "dependencies": [
+        "chain-of-thought-reasoning"
+      ],
+      "metrics": {
+        "design_quality": {
+          "unit": "score",
+          "target": ">8.0"
+        },
+        "scalability_factor": {
+          "unit": "score",
+          "target": ">7.5"
+        },
+        "maintainability": {
+          "unit": "score",
+          "target": ">8.0"
+        }
+      }
+    },
+    "team-orchestration": {
+      "name": "Team Orchestration",
+      "description": "Coordinate AI personas in team structures",
+      "version": "1.0.0",
+      "dependencies": [
+        "chain-of-thought-reasoning",
+        "structured-output"
+      ],
+      "metrics": {
+        "coordination_efficiency": {
+          "unit": "score",
+          "target": ">8.5"
+        },
+        "task_completion": {
+          "unit": "percentage",
+          "target": ">95.0"
+        },
+        "communication_quality": {
+          "unit": "score", 
+          "target": ">8.0"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "system": {
+    "name": "NoCodeAI",
+    "version": "1.0.0",
+    "description": "A No-Code Template-Driven AI Architecture with .NET 9.0 Aspire and Semantic Kernel",
+    "capabilities": [
+      "prompty-processing",
+      "plugin-execution",
+      "template-processing",
+      "chain-of-thought-reasoning",
+      "structured-output"
+    ]
+  },
+  "plugins": {
+    "core": [
+      "System",
+      "Evolution",
+      "CodeGeneration",
+      "Architecture",
+      "Testing",
+      "Documentation"
+    ],
+    "specialized": [
+      "DataScience",
+      "ProductManagement",
+      "Development",
+      "Orchestration",
+      "Analysis"
+    ]
+  },
+  "prompty": {
+    "template_engine": "handlebars",
+    "default_extensions": [
+      ".prompty"
+    ],
+    "structured_output_format": "json"
+  },
+  "evolution": {
+    "stages": [
+      "genesis",
+      "expansion",
+      "integration",
+      "acceleration",
+      "specialization",
+      "independence",
+      "collaboration",
+      "generalization"
+    ],
+    "current_stage": "genesis"
+  },
+  "ai": {
+    "model": "claude-3-7-sonnet-20240219",
+    "max_tokens": 8192,
+    "temperature": 0.7
+  },
+  "monitoring": {
+    "telemetry": true,
+    "log_level": "Information",
+    "performance_tracking": true
+  }
+}

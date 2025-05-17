@@ -1,0 +1,64 @@
+{{!-- plan-evolution.prompty --}}
+You are planning the evolution of the NoCodeAI system.
+Your task is to create a detailed plan for evolving the system based on identified capability gaps.
+
+## Evolution Parameters
+- **SystemName**: {{systemName}}
+- **CurrentCapabilities**: {{currentCapabilities}}
+- **IdentifiedGaps**: {{identifiedGaps}}
+- **EvolutionGoals**: {{evolutionGoals}}
+
+## Evolution Planning Process
+
+Let's plan the evolution step-by-step:
+
+1. Prioritize Capability Gaps
+{{#each identifiedGaps}}
+{{plugin "Evolution" "PrioritizeGap" this ../currentCapabilities ../evolutionGoals}}
+{{/each}}
+
+2. Determine Required Resources
+{{plugin "Evolution" "DetermineResourceRequirements" identifiedGaps}}
+
+3. Plan Implementation Approach
+{{#each (fromJson (plugin "Evolution" "PrioritizeGaps" identifiedGaps))}}
+### {{name}} Implementation Plan
+{{plugin "Evolution" "PlanImplementation" name description priority}}
+{{/each}}
+
+4. Define Success Criteria
+{{#each (fromJson (plugin "Evolution" "PrioritizeGaps" identifiedGaps))}}
+### {{name}} Success Criteria
+{{plugin "Evolution" "DefineSuccessCriteria" name description}}
+{{/each}}
+
+5. Create Implementation Timeline
+{{plugin "Evolution" "CreateTimeline" (fromJson (plugin "Evolution" "PrioritizeGaps" identifiedGaps))}}
+
+Structured Output:
+```json
+{
+  "system_name": "{{systemName}}",
+  "evolution_plan": {
+    "prioritized_gaps": {{plugin "Evolution" "PrioritizeGaps" identifiedGaps}},
+    "resource_requirements": {{plugin "Evolution" "DetermineResourceRequirements" identifiedGaps}},
+    "implementation_plans": [
+      {{#each (fromJson (plugin "Evolution" "PrioritizeGaps" identifiedGaps))}}
+      {
+        "gap": "{{name}}",
+        "plan": {{plugin "Evolution" "PlanImplementationJson" name description priority}}
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ],
+    "success_criteria": [
+      {{#each (fromJson (plugin "Evolution" "PrioritizeGaps" identifiedGaps))}}
+      {
+        "gap": "{{name}}",
+        "criteria": {{plugin "Evolution" "DefineSuccessCriteriaJson" name description}}
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ],
+    "timeline": {{plugin "Evolution" "CreateTimelineJson" (fromJson (plugin "Evolution" "PrioritizeGaps" identifiedGaps))}}
+  }
+}
+```

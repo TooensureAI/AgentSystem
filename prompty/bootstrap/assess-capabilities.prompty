@@ -1,0 +1,61 @@
+{{!-- assess-capabilities.prompty --}}
+You are assessing the capabilities of the NoCodeAI system.
+Your task is to evaluate the current capabilities and determine their effectiveness.
+
+## Assessment Parameters
+- **SystemName**: {{systemName}}
+- **CurrentCapabilities**: {{currentCapabilities}}
+- **ExpectedCapabilities**: {{expectedCapabilities}}
+- **PerformanceMetrics**: {{performanceMetrics}}
+
+## Capability Assessment Process
+
+Let's assess the system capabilities step-by-step:
+
+1. Evaluate Current Capabilities
+{{#each currentCapabilities}}
+### {{this}} Capability Assessment
+{{plugin "Assessment" "EvaluateCapability" this ../performanceMetrics}}
+{{/each}}
+
+2. Identify Missing Capabilities
+{{#each expectedCapabilities}}
+{{#unless (includes ../currentCapabilities this)}}
+### Missing Capability: {{this}}
+{{plugin "Assessment" "AssessMissingCapability" this}}
+{{/unless}}
+{{/each}}
+
+3. Measure Performance Against Benchmarks
+{{plugin "Assessment" "MeasureAgainstBenchmarks" currentCapabilities performanceMetrics}}
+
+4. Summarize Overall System Effectiveness
+{{plugin "Assessment" "SummarizeEffectiveness" currentCapabilities performanceMetrics}}
+
+Structured Output:
+```json
+{
+  "system_name": "{{systemName}}",
+  "assessment_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "capability_assessments": [
+    {{#each currentCapabilities}}
+    {
+      "capability": "{{this}}",
+      "assessment": {{plugin "Assessment" "EvaluateCapabilityJson" this ../performanceMetrics}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "missing_capabilities": [
+    {{#each expectedCapabilities}}
+    {{#unless (includes ../currentCapabilities this)}}
+    {
+      "capability": "{{this}}",
+      "impact": {{plugin "Assessment" "AssessMissingCapabilityJson" this}}
+    }{{#unless @last}},{{/unless}}
+    {{/unless}}
+    {{/each}}
+  ],
+  "benchmark_performance": {{plugin "Assessment" "MeasureAgainstBenchmarksJson" currentCapabilities performanceMetrics}},
+  "overall_effectiveness": {{plugin "Assessment" "SummarizeEffectivenessJson" currentCapabilities performanceMetrics}}
+}
+```

@@ -1,0 +1,56 @@
+{{!-- init-system.prompty --}}
+You are initializing the NoCodeAI system with core capabilities.
+Your task is to set up the initial system configuration and register core plugins.
+
+## System Parameters
+- **SystemName**: {{systemName}}
+- **InitialCapabilities**: {{initialCapabilities}}
+- **PluginsToRegister**: {{pluginsToRegister}}
+
+## Initialization Process
+
+Let's initialize the system step-by-step:
+
+1. System Configuration Setup
+{{plugin "System" "SetupConfiguration" systemName}}
+
+2. Register Core Plugins
+{{#each pluginsToRegister}}
+{{plugin "System" "RegisterPlugin" this}}
+- Registered plugin: {{this}}
+{{/each}}
+
+3. Verify Initial Capabilities
+{{#each initialCapabilities}}
+{{plugin "System" "VerifyCapability" this}}
+- Verified capability: {{this}}
+{{/each}}
+
+4. Initialize Template Engine
+{{plugin "System" "InitializeTemplateEngine"}}
+
+5. Set Up Logging and Telemetry
+{{plugin "System" "SetupTelemetry"}}
+
+Structured Output:
+```json
+{
+  "system_name": "{{systemName}}",
+  "initialization_status": "complete",
+  "registered_plugins": [
+    {{#each pluginsToRegister}}
+    "{{this}}"{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "verified_capabilities": [
+    {{#each initialCapabilities}}
+    "{{this}}"{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "next_steps": [
+    "Perform initial self-assessment",
+    "Identify capability gaps",
+    "Plan first evolution cycle"
+  ]
+}
+```

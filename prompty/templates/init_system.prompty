@@ -1,0 +1,122 @@
+{{!-- 
+  init_system.prompty - System Initialization Template
+  For ThoughtTransfer_v1
+--}}
+
+{{#system}}
+You are initializing the ThoughtTransfer_v1 system. Your responsibility is to set up the core system components, register plugins, and prepare the environment for operation. Follow the structured initialization process carefully.
+{{/system}}
+
+{{#input}}
+{
+  "system_config": {{{system_config}}},
+  "environment": {
+    "dotnet_version": "9.0",
+    "aspire_version": "8.0.0",
+    "semantic_kernel_version": "1.0.0"
+  },
+  "initialization_context": {
+    "target_directory": "{{target_directory}}",
+    "initialization_level": "{{initialization_level}}",
+    "debug_mode": {{debug_mode}}
+  }
+}
+{{/input}}
+
+{{#output format="json"}}
+{
+  "initialization_steps": [
+    {
+      "step": "environment_validation",
+      "description": "Validating .NET environment and prerequisite components",
+      "commands": [
+        "dotnet --version",
+        "dotnet workload install aspire"
+      ]
+    },
+    {
+      "step": "plugin_registration",
+      "description": "Registering core system plugins",
+      "plugins": [
+        {{#each system_config.plugins.core}}
+        {
+          "name": "{{this}}",
+          "initialization_status": "pending",
+          "configuration_path": "{{../target_directory}}/config/plugins/{{this}}.json"
+        }{{#unless @last}},{{/unless}}
+        {{/each}}
+      ]
+    },
+    {
+      "step": "capability_initialization",
+      "description": "Initializing system capabilities",
+      "capabilities": [
+        {{#each system_config.capabilities}}
+        {
+          "name": "{{this}}",
+          "status": "loading",
+          "depends_on": []
+        }{{#unless @last}},{{/unless}}
+        {{/each}}
+      ]
+    },
+    {
+      "step": "kernel_configuration",
+      "description": "Setting up Semantic Kernel with hybrid agent architecture",
+      "configuration": {
+        "agent_framework": {
+          "use_hybrid_approach": true,
+          "memory_configuration": {
+            "persistence_type": "embedded",
+            "embedding_service": "azure_openai"
+          },
+          "reasoning_service": {
+            "providers": ["azure_openai", "anthropic"],
+            "default_provider": "azure_openai"
+          }
+        }
+      }
+    },
+    {
+      "step": "aspire_integration",
+      "description": "Configuring .NET Aspire resource management",
+      "resources": [
+        {
+          "name": "thought_transfer_api",
+          "type": "project",
+          "path": "src/ThoughtTransfer.Api"
+        },
+        {
+          "name": "thought_transfer_dashboard",
+          "type": "project",
+          "path": "src/ThoughtTransfer.Dashboard",
+          "dependencies": ["thought_transfer_api"]
+        },
+        {
+          "name": "thought_transfer_db",
+          "type": "postgres",
+          "connection_string": "Server=localhost;Database=thought_transfer;Port=5432;User Id=postgres;Password=postgres;"
+        }
+      ]
+    },
+    {
+      "step": "ui_configuration",
+      "description": "Setting up Telerik UI components",
+      "components": [
+        "grid", "charts", "forms", "navigation", "data_editors"
+      ]
+    }
+  ],
+  "initialization_summary": {
+    "status": "initializing",
+    "startup_checks": [
+      "Validate environment variables",
+      "Check plugin compatibility",
+      "Verify agent registration",
+      "Test database connections",
+      "Confirm logging configuration"
+    ],
+    "message": "ThoughtTransfer_v1 initialization in progress. Execute startup checks before proceeding to operational state."
+  }
+}
+{{/output}} 

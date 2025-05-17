@@ -1,0 +1,61 @@
+{{!-- analyze-performance.prompty --}}
+You are analyzing the performance of the NoCodeAI system.
+Your task is to identify performance bottlenecks and recommend optimizations.
+
+## Performance Analysis Parameters
+- **SystemName**: {{systemName}}
+- **PerformanceMetrics**: {{performanceMetrics}}
+- **PerformanceRequirements**: {{performanceRequirements}}
+- **SystemArchitecture**: {{systemArchitecture}}
+- **LoadPatterns**: {{loadPatterns}}
+
+## Performance Analysis Process
+
+Let's analyze the performance step-by-step:
+
+1. Review Performance Metrics
+{{plugin "PerformanceAnalysis" "ReviewMetrics" performanceMetrics}}
+
+2. Identify Bottlenecks
+{{plugin "PerformanceAnalysis" "IdentifyBottlenecks" performanceMetrics systemArchitecture}}
+
+3. Analyze Critical Paths
+{{plugin "PerformanceAnalysis" "AnalyzeCriticalPaths" systemArchitecture performanceMetrics}}
+
+4. Assess Resource Utilization
+{{plugin "PerformanceAnalysis" "AssessResourceUtilization" performanceMetrics}}
+
+5. Compare Against Requirements
+{{plugin "PerformanceAnalysis" "CompareWithRequirements" performanceMetrics performanceRequirements}}
+
+6. Analyze Load Handling
+{{#each loadPatterns}}
+### {{name}} Load Pattern Analysis
+{{plugin "PerformanceAnalysis" "AnalyzeLoadPattern" name pattern ../performanceMetrics}}
+{{/each}}
+
+7. Generate Optimization Recommendations
+{{plugin "PerformanceAnalysis" "GenerateOptimizations" performanceMetrics performanceRequirements systemArchitecture}}
+
+Structured Output:
+```json
+{
+  "system_name": "{{systemName}}",
+  "analysis_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "metrics_review": {{plugin "PerformanceAnalysis" "ReviewMetricsJson" performanceMetrics}},
+  "identified_bottlenecks": {{plugin "PerformanceAnalysis" "IdentifyBottlenecksJson" performanceMetrics systemArchitecture}},
+  "critical_path_analysis": {{plugin "PerformanceAnalysis" "AnalyzeCriticalPathsJson" systemArchitecture performanceMetrics}},
+  "resource_utilization": {{plugin "PerformanceAnalysis" "AssessResourceUtilizationJson" performanceMetrics}},
+  "requirements_comparison": {{plugin "PerformanceAnalysis" "CompareWithRequirementsJson" performanceMetrics performanceRequirements}},
+  "load_pattern_analysis": [
+    {{#each loadPatterns}}
+    {
+      "pattern": "{{name}}",
+      "analysis": {{plugin "PerformanceAnalysis" "AnalyzeLoadPatternJson" name pattern ../performanceMetrics}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "optimization_recommendations": {{plugin "PerformanceAnalysis" "GenerateOptimizationsJson" performanceMetrics performanceRequirements systemArchitecture}},
+  "expected_improvements": {{plugin "PerformanceAnalysis" "EstimateImprovementsJson" performanceMetrics (fromJson (plugin "PerformanceAnalysis" "GenerateOptimizationsJson" performanceMetrics performanceRequirements systemArchitecture))}}
+}
+```

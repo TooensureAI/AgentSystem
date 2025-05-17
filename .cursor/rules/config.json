@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "project": {
+    "name": "AgentSystem",
+    "description": "Agent System Framework with MAUI integration"
+  },
+  "rules": {
+    "enabled": true
+  }
+}

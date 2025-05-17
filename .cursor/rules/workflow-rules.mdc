@@ -1,0 +1,42 @@
+# Development Workflow
+
+## Branch Naming
+feature_prefix: feature/
+bugfix_prefix: bugfix/
+release_prefix: release/
+version_pattern: v{major}.{minor}.{patch}
+
+## Commit Messages
+use_conventional_commits: true
+allowed_types:
+  - feat
+  - fix
+  - docs
+  - style
+  - refactor
+  - perf
+  - test
+  - build
+  - ci
+  - chore
+  - revert
+
+## Pull Request Process
+pr_template: |
+  ## Description
+  [Description of the changes]
+
+  ## Type of change
+  - [ ] Bug fix
+  - [ ] New feature
+  - [ ] Breaking change
+  - [ ] Documentation update
+
+  ## Testing
+  - [ ] Tests added/updated
+  - [ ] Manual testing performed
+
+  ## Checklist
+  - [ ] Code follows style guidelines
+  - [ ] Documentation updated
+  - [ ] Changes reviewed

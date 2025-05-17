@@ -1,0 +1,89 @@
+{{!-- transform-dto.prompty --}}
+You are an expert in data transformation and mapping.
+Your task is to transform data from one format to another based on: {{mappingContext}}
+
+## Source Data
+```json
+{{sourceData}}
+```
+
+## Target Schema
+```json
+{{targetSchema}}
+```
+
+Let's transform the data step-by-step:
+
+1. Analyze the source data structure
+{{plugin "Mapping" "FlattenObject" sourceData}}
+
+2. Analyze the target schema
+{{#if (fromJson (plugin "Mapping" "FlattenObject" targetSchema))}}
+  I can see the target schema has a specific structure we need to map to.
+{{else}}
+  The target schema seems to be invalid or empty. I'll proceed with creating a reasonable structure.
+{{/if}}
+
+3. Create a mapping specification
+{{#with (fromJson (plugin "Mapping" "CreateMappingSpec" sourceData targetSchema))}}
+  I've created a mapping specification between the source and target schemas.
+  
+  Mapping:
+  ```json
+  {{json this}}
+  ```
+{{/with}}
+
+4. Apply the mapping to transform the data
+{{#with (fromJson (plugin "Mapping" "TransformObject" sourceData (plugin "Mapping" "CreateMappingSpec" sourceData targetSchema)))}}
+  The basic transformation is complete, but we may need additional processing.
+  
+  Raw transformed data:
+  ```json
+  {{json this}}
+  ```
+{{/with}}
+
+5. Perform any additional transformations required
+{{#if additionalTransformations}}
+  {{#each (fromJson additionalTransformations)}}
+    Applying transformation: {{name}}
+    {{#if (equals type "merge")}}
+      {{plugin "Mapping" "MergeObjects" (json (array (fromJson sourceObject) (fromJson targetObject)))}}
+    {{else if (equals type "custom")}}
+      {{!-- Custom transformation logic --}}
+      Custom transformation applied.
+    {{/if}}
+  {{/each}}
+{{else}}
+  No additional transformations required.
+{{/if}}
+
+6. Finalize the transformed object
+{{#with (fromJson (plugin "Mapping" "TransformObject" sourceData (plugin "Mapping" "CreateMappingSpec" sourceData targetSchema)))}}
+  The transformation is complete.
+  
+  {{#if (plugin "System" "IsEntityMappingEnabled")}}
+    7. Map to the target entity using AutoMapper
+    {{plugin "Mapping" "MapToEntity" (json this) targetEntityType}}
+  {{/if}}
+{{/with}}
+
+Structured Output:
+```json
+{
+  "transformed_data": {{plugin "Mapping" "TransformObject" sourceData (plugin "Mapping" "CreateMappingSpec" sourceData targetSchema)}},
+  "mapping_specification": {{plugin "Mapping" "CreateMappingSpec" sourceData targetSchema}},
+  "transformation_process": {
+    "source_structure": "Analyzed source data structure with {{plugin \"System\" \"CountProperties\" sourceData}} properties",
+    "target_structure": "Mapped to target schema with {{plugin \"System\" \"CountProperties\" targetSchema}} properties",
+    "mapping_created": true,
+    "transformation_applied": true,
+    "additional_transformations_applied": {{#if additionalTransformations}}true{{else}}false{{/if}}
+  },
+  "metadata": {
+    "timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+    "mapping_context": "{{mappingContext}}"
+  }
+}
+```

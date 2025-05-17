@@ -1,0 +1,75 @@
+{{!-- evaluate-evolution.prompty --}}
+You are evaluating the evolution of the NoCodeAI system.
+Your task is to assess the effectiveness of implemented improvements and identify further evolution opportunities.
+
+## Evolution Evaluation Parameters
+- **SystemName**: {{systemName}}
+- **InitialCapabilities**: {{initialCapabilities}}
+- **CurrentCapabilities**: {{currentCapabilities}}
+- **ImplementedImprovements**: {{implementedImprovements}}
+- **EvolutionGoals**: {{evolutionGoals}}
+- **PerformanceMetrics**: {{performanceMetrics}}
+
+## Evolution Evaluation Process
+
+Let's evaluate the evolution step-by-step:
+
+1. Measure Capability Improvements
+{{#each currentCapabilities}}
+{{#if (includes ../initialCapabilities this)}}
+### {{this}} Improvement Evaluation
+{{plugin "EvolutionEvaluation" "MeasureCapabilityImprovement" this ../initialCapabilities ../currentCapabilities ../performanceMetrics}}
+{{else}}
+### {{this}} New Capability Evaluation
+{{plugin "EvolutionEvaluation" "EvaluateNewCapability" this ../currentCapabilities ../performanceMetrics}}
+{{/if}}
+{{/each}}
+
+2. Assess Improvement Effectiveness
+{{#each implementedImprovements}}
+### {{name}} Effectiveness Assessment
+{{plugin "EvolutionEvaluation" "AssessImprovementEffectiveness" name description goalAchievement ../performanceMetrics}}
+{{/each}}
+
+3. Analyze Evolution Progress
+{{plugin "EvolutionEvaluation" "AnalyzeEvolutionProgress" initialCapabilities currentCapabilities evolutionGoals performanceMetrics}}
+
+4. Identify Next Evolution Opportunities
+{{plugin "EvolutionEvaluation" "IdentifyNextOpportunities" currentCapabilities implementedImprovements evolutionGoals performanceMetrics}}
+
+5. Generate Evolution Recommendations
+{{plugin "EvolutionEvaluation" "GenerateRecommendations" currentCapabilities implementedImprovements evolutionGoals performanceMetrics}}
+
+Structured Output:
+```json
+{
+  "system_name": "{{systemName}}",
+  "evaluation_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "capability_improvements": [
+    {{#each currentCapabilities}}
+    {{#if (includes ../initialCapabilities this)}}
+    {
+      "capability": "{{this}}",
+      "improvement_metrics": {{plugin "EvolutionEvaluation" "MeasureCapabilityImprovementJson" this ../initialCapabilities ../currentCapabilities ../performanceMetrics}}
+    }{{#unless @last}},{{/unless}}
+    {{else}}
+    {
+      "capability": "{{this}}",
+      "new_capability_metrics": {{plugin "EvolutionEvaluation" "EvaluateNewCapabilityJson" this ../currentCapabilities ../performanceMetrics}}
+    }{{#unless @last}},{{/unless}}
+    {{/if}}
+    {{/each}}
+  ],
+  "improvement_effectiveness": [
+    {{#each implementedImprovements}}
+    {
+      "improvement": "{{name}}",
+      "effectiveness": {{plugin "EvolutionEvaluation" "AssessImprovementEffectivenessJson" name description goalAchievement ../performanceMetrics}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "evolution_progress": {{plugin "EvolutionEvaluation" "AnalyzeEvolutionProgressJson" initialCapabilities currentCapabilities evolutionGoals performanceMetrics}},
+  "next_opportunities": {{plugin "EvolutionEvaluation" "IdentifyNextOpportunitiesJson" currentCapabilities implementedImprovements evolutionGoals performanceMetrics}},
+  "recommendations": {{plugin "EvolutionEvaluation" "GenerateRecommendationsJson" currentCapabilities implementedImprovements evolutionGoals performanceMetrics}}
+}
+```

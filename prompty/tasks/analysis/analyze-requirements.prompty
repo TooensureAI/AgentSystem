@@ -1,0 +1,64 @@
+{{!-- analyze-requirements.prompty --}}
+You are analyzing requirements for the NoCodeAI system.
+Your task is to break down requirements into actionable components and identify implementation considerations.
+
+## Requirements Analysis Parameters
+- **ProjectName**: {{projectName}}
+- **Requirements**: {{requirements}}
+- **SystemContext**: {{systemContext}}
+- **Constraints**: {{constraints}}
+- **Stakeholders**: {{stakeholders}}
+
+## Requirements Analysis Process
+
+Let's analyze the requirements step-by-step:
+
+1. Extract Key Features
+{{plugin "RequirementsAnalysis" "ExtractKeyFeatures" requirements}}
+
+2. Identify Functional Requirements
+{{plugin "RequirementsAnalysis" "IdentifyFunctionalRequirements" requirements}}
+
+3. Identify Non-Functional Requirements
+{{plugin "RequirementsAnalysis" "IdentifyNonFunctionalRequirements" requirements constraints}}
+
+4. Map Stakeholder Needs
+{{#each stakeholders}}
+### {{name}} Needs Analysis
+{{plugin "RequirementsAnalysis" "MapStakeholderNeeds" name role ../requirements}}
+{{/each}}
+
+5. Identify Technical Components
+{{plugin "RequirementsAnalysis" "IdentifyTechnicalComponents" requirements systemContext}}
+
+6. Risk Assessment
+{{plugin "RequirementsAnalysis" "AssessRisks" requirements constraints}}
+
+7. Prioritize Requirements
+{{plugin "RequirementsAnalysis" "PrioritizeRequirements" requirements stakeholders}}
+
+Structured Output:
+```json
+{
+  "project_name": "{{projectName}}",
+  "analysis_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "key_features": {{plugin "RequirementsAnalysis" "ExtractKeyFeaturesJson" requirements}},
+  "requirements_breakdown": {
+    "functional": {{plugin "RequirementsAnalysis" "IdentifyFunctionalRequirementsJson" requirements}},
+    "non_functional": {{plugin "RequirementsAnalysis" "IdentifyNonFunctionalRequirementsJson" requirements constraints}}
+  },
+  "stakeholder_mapping": [
+    {{#each stakeholders}}
+    {
+      "stakeholder": "{{name}}",
+      "role": "{{role}}",
+      "needs": {{plugin "RequirementsAnalysis" "MapStakeholderNeedsJson" name role ../requirements}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "technical_components": {{plugin "RequirementsAnalysis" "IdentifyTechnicalComponentsJson" requirements systemContext}},
+  "risks": {{plugin "RequirementsAnalysis" "AssessRisksJson" requirements constraints}},
+  "prioritized_requirements": {{plugin "RequirementsAnalysis" "PrioritizeRequirementsJson" requirements stakeholders}},
+  "implementation_recommendations": {{plugin "RequirementsAnalysis" "GenerateRecommendationsJson" requirements systemContext constraints stakeholders}}
+}
+```

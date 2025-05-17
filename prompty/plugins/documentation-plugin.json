@@ -1,0 +1,224 @@
+{
+  "plugin": {
+    "name": "Documentation",
+    "description": "Plugin for generating comprehensive documentation",
+    "version": "1.0.0",
+    "author": "NoCodeAI",
+    "dependencies": [
+      "System",
+      "Architecture"
+    ]
+  },
+  "functions": [
+    {
+      "name": "GenerateAPIDocumentation",
+      "description": "Generates API documentation from code",
+      "parameters": [
+        {
+          "name": "apiCode",
+          "type": "string",
+          "description": "API implementation code"
+        },
+        {
+          "name": "docFormat",
+          "type": "string",
+          "description": "Documentation format (e.g., Markdown, HTML)"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "API documentation"
+      }
+    },
+    {
+      "name": "GenerateUserGuide",
+      "description": "Generates a user guide for a system",
+      "parameters": [
+        {
+          "name": "systemDescription",
+          "type": "string",
+          "description": "System description"
+        },
+        {
+          "name": "userStories",
+          "type": "string",
+          "description": "User stories"
+        },
+        {
+          "name": "guideFormat",
+          "type": "string",
+          "description": "Guide format (e.g., Markdown, PDF)"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "User guide document"
+      }
+    },
+    {
+      "name": "GenerateTechnicalDocumentation",
+      "description": "Generates technical documentation for a system",
+      "parameters": [
+        {
+          "name": "architecture",
+          "type": "string",
+          "description": "System architecture"
+        },
+        {
+          "name": "components",
+          "type": "string",
+          "description": "JSON array of components"
+        },
+        {
+          "name": "docFormat",
+          "type": "string",
+          "description": "Documentation format"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Technical documentation"
+      }
+    },
+    {
+      "name": "GenerateDiagrams",
+      "description": "Generates diagrams for documentation",
+      "parameters": [
+        {
+          "name": "diagramContent",
+          "type": "string",
+          "description": "Content to diagram"
+        },
+        {
+          "name": "diagramType",
+          "type": "string",
+          "description": "Type of diagram"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Diagram in specified format"
+      }
+    },
+    {
+      "name": "ExtractCodeExamples",
+      "description": "Extracts code examples from source code",
+      "parameters": [
+        {
+          "name": "sourceCode",
+          "type": "string",
+          "description": "Source code"
+        },
+        {
+          "name": "targetAudience",
+          "type": "string",
+          "description": "Target audience (e.g., beginner, expert)"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Extracted code examples"
+      }
+    },
+    {
+      "name": "GenerateReleaseNotes",
+      "description": "Generates release notes from changes",
+      "parameters": [
+        {
+          "name": "changes",
+          "type": "string",
+          "description": "JSON array of changes"
+        },
+        {
+          "name": "versionNumber",
+          "type": "string",
+          "description": "Version number"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Release notes document"
+      }
+    },
+    {
+      "name": "GenerateInstallationGuide",
+      "description": "Generates an installation guide",
+      "parameters": [
+        {
+          "name": "systemRequirements",
+          "type": "string",
+          "description": "System requirements"
+        },
+        {
+          "name": "installationSteps",
+          "type": "string",
+          "description": "Installation steps"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Installation guide document"
+      }
+    },
+    {
+      "name": "GenerateDeploymentDocumentation",
+      "description": "Generates deployment documentation",
+      "parameters": [
+        {
+          "name": "deploymentEnvironment",
+          "type": "string",
+          "description": "Deployment environment"
+        },
+        {
+          "name": "deploymentSteps",
+          "type": "string",
+          "description": "Deployment steps"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Deployment documentation"
+      }
+    },
+    {
+      "name": "GenerateDocumentationSite",
+      "description": "Generates a documentation site structure",
+      "parameters": [
+        {
+          "name": "docSections",
+          "type": "string",
+          "description": "JSON array of documentation sections"
+        },
+        {
+          "name": "siteGenerator",
+          "type": "string",
+          "description": "Site generator to use (e.g., Jekyll, Docusaurus)"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Documentation site structure"
+      }
+    },
+    {
+      "name": "ValidateDocumentation",
+      "description": "Validates documentation for completeness and accuracy",
+      "parameters": [
+        {
+          "name": "documentation",
+          "type": "string",
+          "description": "Documentation content"
+        },
+        {
+          "name": "validationCriteria",
+          "type": "string",
+          "description": "Validation criteria"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Validation report"
+      }
+    }
+  ]
+}

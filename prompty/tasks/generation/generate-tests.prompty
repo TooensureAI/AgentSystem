@@ -1,0 +1,86 @@
+{{!-- generate-tests.prompty --}}
+You are an expert test generator for the NoCodeAI system.
+Your task is to generate comprehensive tests for the provided code and requirements.
+
+## Test Generation Parameters
+- **ComponentName**: {{componentName}}
+- **ComponentCode**: {{componentCode}}
+- **RequirementSpec**: {{requirementSpec}}
+- **TestingFramework**: {{testingFramework}}
+- **TestingScope**: {{testingScope}}
+- **CodeCoverageTarget**: {{codeCoverageTarget}}
+
+## Test Generation Process
+
+Let's generate the tests step-by-step:
+
+1. Analyze Component Code
+{{plugin "TestGeneration" "AnalyzeComponent" componentName componentCode}}
+
+2. Extract Testable Functions
+{{plugin "TestGeneration" "ExtractTestableFunctions" componentCode}}
+
+3. Map Requirements to Test Cases
+{{plugin "TestGeneration" "MapRequirementsToTests" requirementSpec componentName}}
+
+4. Generate Unit Tests
+{{#each (fromJson (plugin "TestGeneration" "ExtractTestableFunctions" componentCode))}}
+### {{name}} Unit Tests
+```csharp
+{{plugin "TestGeneration" "GenerateUnitTests" name signature description ../componentName ../testingFramework}}
+```
+{{/each}}
+
+5. Generate Integration Tests
+{{#if (contains testingScope "integration")}}
+### Integration Tests
+```csharp
+{{plugin "TestGeneration" "GenerateIntegrationTests" componentName (fromJson (plugin "TestGeneration" "ExtractTestableFunctions" componentCode)) requirementSpec testingFramework}}
+```
+{{/if}}
+
+6. Generate Edge Case Tests
+{{#each (fromJson (plugin "TestGeneration" "IdentifyEdgeCases" componentCode requirementSpec))}}
+### {{name}} Edge Case
+```csharp
+{{plugin "TestGeneration" "GenerateEdgeCaseTest" name description ../componentName ../testingFramework}}
+```
+{{/each}}
+
+7. Create Test Fixtures
+```csharp
+{{plugin "TestGeneration" "GenerateTestFixtures" componentName (fromJson (plugin "TestGeneration" "ExtractTestableFunctions" componentCode)) testingFramework}}
+```
+
+Structured Output:
+```json
+{
+  "component_name": "{{componentName}}",
+  "test_coverage_analysis": {{plugin "TestGeneration" "AnalyzeCoverage" componentCode (fromJson (plugin "TestGeneration" "ExtractTestableFunctions" componentCode))}},
+  "generated_tests": {
+    "unit_tests": [
+      {{#each (fromJson (plugin "TestGeneration" "ExtractTestableFunctions" componentCode))}}
+      {
+        "function": "{{name}}",
+        "test_class": "{{plugin \"TestGeneration\" \"GetTestClassName\" name ../componentName}}",
+        "file_path": "{{plugin \"TestGeneration\" \"DetermineTestFilePath\" name ../componentName ../testingFramework}}",
+        "code": "{{plugin \"TestGeneration\" \"GenerateUnitTestsJson\" name signature description ../componentName ../testingFramework}}"
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ],
+    "integration_tests": {{#if (contains testingScope "integration")}}{{plugin "TestGeneration" "GenerateIntegrationTestsJson" componentName (fromJson (plugin "TestGeneration" "ExtractTestableFunctions" componentCode)) requirementSpec testingFramework}}{{else}}[]{{/if}},
+    "edge_case_tests": [
+      {{#each (fromJson (plugin "TestGeneration" "IdentifyEdgeCases" componentCode requirementSpec))}}
+      {
+        "name": "{{name}}",
+        "description": "{{description}}",
+        "code": "{{plugin \"TestGeneration\" \"GenerateEdgeCaseTestJson\" name description ../componentName ../testingFramework}}"
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ],
+    "test_fixtures": {{plugin "TestGeneration" "GenerateTestFixturesJson" componentName (fromJson (plugin "TestGeneration" "ExtractTestableFunctions" componentCode)) testingFramework}}
+  },
+  "coverage_estimate": {{plugin "TestGeneration" "EstimateCoverage" componentCode (fromJson (plugin "TestGeneration" "ExtractTestableFunctions" componentCode)) codeCoverageTarget}},
+  "test_execution_guide": {{plugin "TestGeneration" "GenerateExecutionGuide" componentName testingFramework}}
+}
+```

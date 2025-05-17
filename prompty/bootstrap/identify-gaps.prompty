@@ -1,0 +1,60 @@
+{{!-- identify-gaps.prompty --}}
+You are identifying capability gaps in the NoCodeAI system.
+Your task is to analyze the current capabilities and identify areas for improvement.
+
+## Analysis Parameters
+- **SystemName**: {{systemName}}
+- **CurrentCapabilities**: {{currentCapabilities}}
+- **ExpectedCapabilities**: {{expectedCapabilities}}
+- **SystemGoals**: {{systemGoals}}
+- **CapabilityAssessment**: {{capabilityAssessment}}
+
+## Gap Identification Process
+
+Let's identify the capability gaps step-by-step:
+
+1. Compare Current vs Expected Capabilities
+{{plugin "Analysis" "CompareCapabilities" currentCapabilities expectedCapabilities}}
+
+2. Analyze Missing Capabilities
+{{#each (fromJson (plugin "Analysis" "IdentifyMissingCapabilities" currentCapabilities expectedCapabilities))}}
+### {{name}} Gap Analysis
+{{plugin "Analysis" "AnalyzeCapabilityGap" name description ../systemGoals}}
+{{/each}}
+
+3. Identify Improvement Areas for Existing Capabilities
+{{#each currentCapabilities}}
+{{#if (plugin "Analysis" "NeedsImprovement" this ../capabilityAssessment)}}
+### {{this}} Improvement Analysis
+{{plugin "Analysis" "IdentifyImprovementAreas" this ../capabilityAssessment ../systemGoals}}
+{{/if}}
+{{/each}}
+
+4. Prioritize Capability Gaps
+{{plugin "Analysis" "PrioritizeGaps" (fromJson (plugin "Analysis" "IdentifyAllGaps" currentCapabilities expectedCapabilities capabilityAssessment)) systemGoals}}
+
+Structured Output:
+```json
+{
+  "system_name": "{{systemName}}",
+  "analysis_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "identified_gaps": [
+    {{#each (fromJson (plugin "Analysis" "IdentifyAllGaps" currentCapabilities expectedCapabilities capabilityAssessment))}}
+    {
+      "name": "{{name}}",
+      "description": "{{description}}",
+      "type": "{{type}}",
+      "priority": {{plugin "Analysis" "CalculateGapPriority" name description type ../systemGoals}},
+      "impact": {{plugin "Analysis" "AssessGapImpact" name description type ../systemGoals}},
+      "recommendations": {{plugin "Analysis" "GenerateRecommendations" name description type ../systemGoals}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "prioritized_gaps": {{plugin "Analysis" "PrioritizeGapsJson" (fromJson (plugin "Analysis" "IdentifyAllGaps" currentCapabilities expectedCapabilities capabilityAssessment)) systemGoals}},
+  "next_steps": {
+    "immediate": {{plugin "Analysis" "GenerateImmediateNextSteps" (fromJson (plugin "Analysis" "IdentifyAllGaps" currentCapabilities expectedCapabilities capabilityAssessment)) systemGoals}},
+    "short_term": {{plugin "Analysis" "GenerateShortTermSteps" (fromJson (plugin "Analysis" "IdentifyAllGaps" currentCapabilities expectedCapabilities capabilityAssessment)) systemGoals}},
+    "long_term": {{plugin "Analysis" "GenerateLongTermSteps" (fromJson (plugin "Analysis" "IdentifyAllGaps" currentCapabilities expectedCapabilities capabilityAssessment)) systemGoals}}
+  }
+}
+```

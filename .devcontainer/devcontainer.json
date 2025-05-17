@@ -1,0 +1,34 @@
+{
+    "name": ".NET 9.0 Aspire Development",
+    "dockerFile": "Dockerfile",
+    "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+            "bash": {
+                "path": "/bin/bash"
+            }
+        },
+        "dotnet.defaultSolution": "AspireSKSolution.sln"
+    },
+    "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.dotnet-interactive-vscode",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-vscode.vscode-node-azure-pack"
+    ],
+    "forwardPorts": [
+        15151,  // Aspire Dashboard
+        5000,  // ASP.NET Core HTTPS
+        5001   // ASP.NET Core HTTP
+    ],
+    "remoteUser": "root",
+    "postCreateCommand": "echo 'Container is ready!' && dotnet --list-sdks && dotnet workload list",
+    "runArgs": [
+        "--network=host"
+    ],
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    }
+} 

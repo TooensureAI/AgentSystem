@@ -1,0 +1,223 @@
+{
+  "plugin": {
+    "name": "Architecture",
+    "description": "Plugin for designing and analyzing system architectures",
+    "version": "1.0.0",
+    "author": "NoCodeAI",
+    "dependencies": [
+      "System"
+    ]
+  },
+  "functions": [
+    {
+      "name": "DesignArchitecture",
+      "description": "Designs a system architecture based on requirements",
+      "parameters": [
+        {
+          "name": "requirements",
+          "type": "string",
+          "description": "System requirements"
+        },
+        {
+          "name": "architectureStyle",
+          "type": "string",
+          "description": "Preferred architecture style"
+        },
+        {
+          "name": "scalabilityRequirements",
+          "type": "string",
+          "description": "Scalability requirements"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Architecture design document"
+      }
+    },
+    {
+      "name": "IdentifyComponents",
+      "description": "Identifies components needed for the architecture",
+      "parameters": [
+        {
+          "name": "requirements",
+          "type": "string",
+          "description": "System requirements"
+        },
+        {
+          "name": "architectureStyle",
+          "type": "string",
+          "description": "Preferred architecture style"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "JSON array of components"
+      }
+    },
+    {
+      "name": "DefineInteractions",
+      "description": "Defines interactions between components",
+      "parameters": [
+        {
+          "name": "components",
+          "type": "string",
+          "description": "JSON array of components"
+        },
+        {
+          "name": "interactionStyle",
+          "type": "string",
+          "description": "Preferred interaction style (e.g., REST, messaging)"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Component interaction definitions"
+      }
+    },
+    {
+      "name": "DesignDataModel",
+      "description": "Designs the data model for the system",
+      "parameters": [
+        {
+          "name": "requirements",
+          "type": "string",
+          "description": "System requirements"
+        },
+        {
+          "name": "dataStorage",
+          "type": "string",
+          "description": "Data storage technology"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Data model design"
+      }
+    },
+    {
+      "name": "AnalyzeArchitecture",
+      "description": "Analyzes an existing architecture",
+      "parameters": [
+        {
+          "name": "architecture",
+          "type": "string",
+          "description": "Existing architecture description"
+        },
+        {
+          "name": "evaluationCriteria",
+          "type": "string",
+          "description": "Criteria for evaluation"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Architecture analysis"
+      }
+    },
+    {
+      "name": "GenerateArchitectureDiagram",
+      "description": "Generates an architecture diagram",
+      "parameters": [
+        {
+          "name": "components",
+          "type": "string",
+          "description": "JSON array of components"
+        },
+        {
+          "name": "interactions",
+          "type": "string",
+          "description": "Component interactions"
+        },
+        {
+          "name": "diagramType",
+          "type": "string",
+          "description": "Type of diagram (e.g., C4, UML)"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Architecture diagram in the specified format"
+      }
+    },
+    {
+      "name": "EvaluateScalability",
+      "description": "Evaluates the scalability of an architecture",
+      "parameters": [
+        {
+          "name": "architecture",
+          "type": "string",
+          "description": "Architecture description"
+        },
+        {
+          "name": "scalabilityRequirements",
+          "type": "string",
+          "description": "Scalability requirements"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Scalability evaluation"
+      }
+    },
+    {
+      "name": "EvaluatePerformance",
+      "description": "Evaluates the performance characteristics of an architecture",
+      "parameters": [
+        {
+          "name": "architecture",
+          "type": "string",
+          "description": "Architecture description"
+        },
+        {
+          "name": "performanceRequirements",
+          "type": "string",
+          "description": "Performance requirements"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Performance evaluation"
+      }
+    },
+    {
+      "name": "GenerateImplementationPlan",
+      "description": "Generates a plan for implementing the architecture",
+      "parameters": [
+        {
+          "name": "architecture",
+          "type": "string",
+          "description": "Architecture description"
+        },
+        {
+          "name": "developmentResources",
+          "type": "string",
+          "description": "Available development resources"
+        },
+        {
+          "name": "timeline",
+          "type": "string",
+          "description": "Implementation timeline"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Implementation plan"
+      }
+    },
+    {
+      "name": "IdentifyTechnicalDebt",
+      "description": "Identifies potential technical debt in an architecture",
+      "parameters": [
+        {
+          "name": "architecture",
+          "type": "string",
+          "description": "Architecture description"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "description": "Technical debt analysis"
+      }
+    }
+  ]
+}

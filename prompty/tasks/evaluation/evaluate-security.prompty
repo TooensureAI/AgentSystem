@@ -1,0 +1,61 @@
+{{!-- evaluate-security.prompty --}}
+You are evaluating the security of the NoCodeAI system.
+Your task is to assess security measures, identify vulnerabilities, and suggest improvements.
+
+## Security Evaluation Parameters
+- **ComponentName**: {{componentName}}
+- **ComponentCode**: {{componentCode}}
+- **SecurityRequirements**: {{securityRequirements}}
+- **ThreatModels**: {{threatModels}}
+- **SecurityControls**: {{securityControls}}
+
+## Security Evaluation Process
+
+Let's evaluate the security step-by-step:
+
+1. Analyze Security Measures
+{{plugin "SecurityEvaluation" "AnalyzeSecurityMeasures" componentCode securityControls}}
+
+2. Identify Vulnerabilities
+{{plugin "SecurityEvaluation" "IdentifyVulnerabilities" componentCode}}
+
+3. Evaluate Against Threat Models
+{{#each threatModels}}
+### {{name}} Threat Model Evaluation
+{{plugin "SecurityEvaluation" "EvaluateAgainstThreatModel" name description attack_vectors ../componentCode ../securityControls}}
+{{/each}}
+
+4. Check Compliance with Security Requirements
+{{plugin "SecurityEvaluation" "CheckRequirementsCompliance" componentCode securityRequirements}}
+
+5. Assess Authentication and Authorization
+{{plugin "SecurityEvaluation" "AssessAuthMechanisms" componentCode}}
+
+6. Evaluate Data Protection
+{{plugin "SecurityEvaluation" "EvaluateDataProtection" componentCode}}
+
+7. Generate Security Recommendations
+{{plugin "SecurityEvaluation" "GenerateRecommendations" componentCode (fromJson (plugin "SecurityEvaluation" "IdentifyVulnerabilities" componentCode)) securityRequirements}}
+
+Structured Output:
+```json
+{
+  "component_name": "{{componentName}}",
+  "evaluation_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "security_measures_analysis": {{plugin "SecurityEvaluation" "AnalyzeSecurityMeasuresJson" componentCode securityControls}},
+  "identified_vulnerabilities": {{plugin "SecurityEvaluation" "IdentifyVulnerabilitiesJson" componentCode}},
+  "threat_model_evaluations": [
+    {{#each threatModels}}
+    {
+      "model": "{{name}}",
+      "evaluation": {{plugin "SecurityEvaluation" "EvaluateAgainstThreatModelJson" name description attack_vectors ../componentCode ../securityControls}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "requirements_compliance": {{plugin "SecurityEvaluation" "CheckRequirementsComplianceJson" componentCode securityRequirements}},
+  "auth_assessment": {{plugin "SecurityEvaluation" "AssessAuthMechanismsJson" componentCode}},
+  "data_protection_evaluation": {{plugin "SecurityEvaluation" "EvaluateDataProtectionJson" componentCode}},
+  "security_recommendations": {{plugin "SecurityEvaluation" "GenerateRecommendationsJson" componentCode (fromJson (plugin "SecurityEvaluation" "IdentifyVulnerabilities" componentCode)) securityRequirements}},
+  "security_score": {{plugin "SecurityEvaluation" "CalculateSecurityScore" componentCode securityRequirements securityControls}}
+}
+```

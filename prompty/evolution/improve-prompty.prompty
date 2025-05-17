@@ -1,0 +1,54 @@
+{{!-- improve-prompty.prompty --}}
+You are improving an existing prompty file for the NoCodeAI system.
+Your task is to analyze the current template and enhance it to improve its effectiveness.
+
+## Prompty Improvement Parameters
+- **PromptyName**: {{promptyName}}
+- **PromptyContent**: {{promptyContent}}
+- **ImprovementGoals**: {{improvementGoals}}
+- **UsageFeedback**: {{usageFeedback}}
+- **PerformanceMetrics**: {{performanceMetrics}}
+
+## Prompty Improvement Process
+
+Let's improve the prompty file step-by-step:
+
+1. Analyze Current Template
+{{plugin "PromptyAnalysis" "AnalyzeTemplate" promptyContent}}
+
+2. Identify Improvement Opportunities
+{{plugin "PromptyAnalysis" "IdentifyImprovementOpportunities" promptyContent improvementGoals usageFeedback}}
+
+3. Enhance Template Structure
+```handlebars
+{{plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))}}
+```
+
+4. Optimize Plugin Calls
+```handlebars
+{{plugin "PromptyImprovement" "OptimizePluginCalls" (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))) usageFeedback}}
+```
+
+5. Improve Output Format
+```handlebars
+{{plugin "PromptyImprovement" "ImproveOutputFormat" (plugin "PromptyImprovement" "OptimizePluginCalls" (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))) usageFeedback) performanceMetrics}}
+```
+
+6. Verify Improvements
+{{plugin "PromptyAnalysis" "VerifyImprovements" promptyContent (plugin "PromptyImprovement" "ImproveOutputFormat" (plugin "PromptyImprovement" "OptimizePluginCalls" (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))) usageFeedback) performanceMetrics) improvementGoals}}
+
+Structured Output:
+```json
+{
+  "prompty_name": "{{promptyName}}",
+  "improvement_analysis": {{plugin "PromptyAnalysis" "AnalyzeTemplateJson" promptyContent}},
+  "identified_opportunities": {{plugin "PromptyAnalysis" "IdentifyImprovementOpportunitiesJson" promptyContent improvementGoals usageFeedback}},
+  "improved_template": "{{plugin \"PromptyImprovement\" \"GetFinalImprovedTemplate\" promptyContent improvementGoals usageFeedback performanceMetrics}}",
+  "improvement_summary": {
+    "structure_changes": {{plugin "PromptyAnalysis" "SummarizeStructuralChanges" promptyContent (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals)))}},
+    "plugin_call_optimizations": {{plugin "PromptyAnalysis" "SummarizePluginCallOptimizations" (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))) (plugin "PromptyImprovement" "OptimizePluginCalls" (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))) usageFeedback)}},
+    "output_format_improvements": {{plugin "PromptyAnalysis" "SummarizeOutputFormatImprovements" (plugin "PromptyImprovement" "OptimizePluginCalls" (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))) usageFeedback) (plugin "PromptyImprovement" "ImproveOutputFormat" (plugin "PromptyImprovement" "OptimizePluginCalls" (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))) usageFeedback) performanceMetrics)}}
+  },
+  "verification_results": {{plugin "PromptyAnalysis" "VerifyImprovementsJson" promptyContent (plugin "PromptyImprovement" "ImproveOutputFormat" (plugin "PromptyImprovement" "OptimizePluginCalls" (plugin "PromptyImprovement" "EnhanceStructure" promptyContent (fromJson (plugin "PromptyAnalysis" "IdentifyStructuralImprovements" promptyContent improvementGoals))) usageFeedback) performanceMetrics) improvementGoals}}
+}
+```

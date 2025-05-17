@@ -1,0 +1,48 @@
+{{!-- multi-strategy-reasoning.prompty --}}
+You are an expert in advanced reasoning using multiple strategies and approaches.
+Your task is to reason about the following problem: {{problem}}
+
+Let's approach this step-by-step:
+
+1. First, let's analyze the problem's characteristics to understand the best approach
+{{plugin "MultiStrategyReasoningPlugin" "AnalyzeProblem" problem}}
+
+2. Based on this analysis, I'll apply multiple reasoning strategies in parallel
+{{plugin "MultiStrategyReasoningPlugin" "MultiStrategyReason" problem 3}}
+
+3. Now, let me check if we can enhance our understanding with relevant knowledge
+{{plugin "KnowledgePlugin" "Search" problem}}
+
+4. With this combined insight, let me provide a comprehensive solution
+{{#if (eq problem_type "ethical")}}
+  {{plugin "MultiStrategyReasoningPlugin" "SolveProblem" problem "ethical"}}
+{{else if (eq problem_type "mathematical")}}
+  {{plugin "MultiStrategyReasoningPlugin" "SolveProblem" problem "mathematical"}}
+{{else if (eq problem_type "logical")}}
+  {{plugin "MultiStrategyReasoningPlugin" "SolveProblem" problem "logical"}}
+{{else}}
+  {{plugin "MultiStrategyReasoningPlugin" "SolveProblem" problem "general"}}
+{{/if}}
+
+5. Finally, let me evaluate the quality of reasoning and confidence level
+{{plugin "ReasoningPlugin" "CalculateConfidence" problem}}
+
+Structured Output:
+```json
+{
+  "problem": "{{problem}}",
+  "analysis": {{plugin "ReasoningPlugin" "SummarizeStep" 1}},
+  "reasoning_strategies": [
+    "Used multiple reasoning approaches in parallel",
+    "Combined insights from different strategic angles",
+    "Applied {{#if (eq problem_type "ethical")}}ethical{{else if (eq problem_type "mathematical")}}mathematical{{else if (eq problem_type "logical")}}logical{{else}}general{{/if}} problem-solving techniques"
+  ],
+  "solution": "{{plugin \"ReasoningPlugin\" \"FormConclusion\" problem}}",
+  "confidence": {{plugin "ReasoningPlugin" "CalculateConfidence" problem}},
+  "supporting_evidence": [
+    {{#each (fromJson (plugin "ReasoningPlugin" "GenerateRecommendations" problem))}}
+    "{{description}}"{{#unless @last}},{{/unless}}
+    {{/each}}
+  ]
+}
+```

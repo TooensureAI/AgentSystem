@@ -1,0 +1,61 @@
+{{!-- evaluate-performance.prompty --}}
+You are evaluating the performance of the NoCodeAI system components.
+Your task is to assess performance metrics, identify issues, and suggest optimizations.
+
+## Performance Evaluation Parameters
+- **ComponentName**: {{componentName}}
+- **PerformanceMetrics**: {{performanceMetrics}}
+- **PerformanceBaselines**: {{performanceBaselines}}
+- **PerformanceRequirements**: {{performanceRequirements}}
+- **LoadScenarios**: {{loadScenarios}}
+
+## Performance Evaluation Process
+
+Let's evaluate the performance step-by-step:
+
+1. Analyze Performance Metrics
+{{plugin "PerformanceEvaluation" "AnalyzeMetrics" performanceMetrics}}
+
+2. Compare Against Baselines
+{{plugin "PerformanceEvaluation" "CompareWithBaselines" performanceMetrics performanceBaselines}}
+
+3. Evaluate Against Requirements
+{{plugin "PerformanceEvaluation" "EvaluateAgainstRequirements" performanceMetrics performanceRequirements}}
+
+4. Analyze Load Handling
+{{#each loadScenarios}}
+### {{name}} Load Scenario Evaluation
+{{plugin "PerformanceEvaluation" "EvaluateLoadScenario" name scenario ../performanceMetrics ../performanceRequirements}}
+{{/each}}
+
+5. Identify Performance Bottlenecks
+{{plugin "PerformanceEvaluation" "IdentifyBottlenecks" performanceMetrics loadScenarios}}
+
+6. Assess Resource Efficiency
+{{plugin "PerformanceEvaluation" "AssessResourceEfficiency" performanceMetrics}}
+
+7. Generate Optimization Recommendations
+{{plugin "PerformanceEvaluation" "GenerateOptimizations" performanceMetrics performanceRequirements (fromJson (plugin "PerformanceEvaluation" "IdentifyBottlenecks" performanceMetrics loadScenarios))}}
+
+Structured Output:
+```json
+{
+  "component_name": "{{componentName}}",
+  "evaluation_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "metrics_analysis": {{plugin "PerformanceEvaluation" "AnalyzeMetricsJson" performanceMetrics}},
+  "baseline_comparison": {{plugin "PerformanceEvaluation" "CompareWithBaselinesJson" performanceMetrics performanceBaselines}},
+  "requirements_evaluation": {{plugin "PerformanceEvaluation" "EvaluateAgainstRequirementsJson" performanceMetrics performanceRequirements}},
+  "load_scenario_results": [
+    {{#each loadScenarios}}
+    {
+      "scenario": "{{name}}",
+      "evaluation": {{plugin "PerformanceEvaluation" "EvaluateLoadScenarioJson" name scenario ../performanceMetrics ../performanceRequirements}}
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "identified_bottlenecks": {{plugin "PerformanceEvaluation" "IdentifyBottlenecksJson" performanceMetrics loadScenarios}},
+  "resource_efficiency": {{plugin "PerformanceEvaluation" "AssessResourceEfficiencyJson" performanceMetrics}},
+  "optimizations": {{plugin "PerformanceEvaluation" "GenerateOptimizationsJson" performanceMetrics performanceRequirements (fromJson (plugin "PerformanceEvaluation" "IdentifyBottlenecks" performanceMetrics loadScenarios))}},
+  "performance_score": {{plugin "PerformanceEvaluation" "CalculatePerformanceScore" performanceMetrics performanceRequirements}}
+}
+```

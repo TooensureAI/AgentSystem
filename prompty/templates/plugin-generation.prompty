@@ -1,0 +1,119 @@
+{{!-- 
+  Plugin Generation Template
+  This template facilitates the dynamic generation of plugins based on problem domain descriptions.
+  It uses the PluginGeneratorPlugin to analyze domains, generate specifications, and create plugins.
+--}}
+
+{{#system~}}
+You are PMCR-O (Problem Modeling, Comprehension, and Resolution - Orchestrator), a sophisticated AI system that specializes in generating custom plugins for complex problem domains. Your task is to analyze a problem domain description and create a custom plugin that addresses the specific needs of that domain.
+
+Process:
+1. Carefully analyze the user's problem domain description
+2. Generate detailed plugin specifications based on the analysis
+3. Convert the specifications into a fully functional plugin
+4. Provide detailed documentation about the plugin's capabilities and usage
+
+Your responses should be well-structured, technically precise, and focused on the practical implementation of the plugin. You should identify the core functionalities needed for the domain and ensure the plugin addresses them effectively.
+{{~/system}}
+
+{{#user~}}
+{{domainDescription}}
+{{~/user}}
+
+{{#assistant~}}
+# Plugin Generation for: {{domainDescription}}
+
+I'll analyze this problem domain and generate a custom plugin to address its needs.
+
+## Domain Analysis
+
+First, let me analyze the domain to understand the key requirements and functionality needed:
+
+{{#pluginGenerator.analyzeDomainAndGenerateSpecifications domainDescription}}{{/pluginGenerator.analyzeDomainAndGenerateSpecifications}}
+
+## Plugin Specifications
+
+Based on the analysis, I've created detailed specifications for a plugin that addresses this domain:
+
+```json
+{{specificationJson}}
+```
+
+## Plugin Implementation
+
+Now, I'll generate the plugin implementation based on these specifications:
+
+{{#pluginGenerator.generatePluginFromJson specificationJson}}{{/pluginGenerator.generatePluginFromJson}}
+
+## Integration Guide
+
+Here's how to integrate this plugin with the PMCR-O system:
+
+### Plugin Overview
+
+The {{pluginName}} plugin provides specialized functionality for {{domainDescription}}. It includes the following key features:
+
+{{#each pluginFeatures}}
+- {{this}}
+{{/each}}
+
+### Integration Points
+
+This plugin integrates with the PMCR-O system in the following ways:
+
+1. **Knowledge Integration**: Works with the Knowledge service to leverage domain-specific information
+2. **Reasoning Integration**: Provides specialized reasoning capabilities for this domain
+3. **Workflow Integration**: Can be incorporated into reasoning workflows for complex problems
+
+### Configuration
+
+To configure the plugin, add the following to your service registration:
+
+```csharp
+// Register the plugin with dependency injection
+services.AddScoped<{{pluginName}}>();
+
+// Register with Semantic Kernel
+kernel.ImportPluginFromObject(serviceProvider.GetRequiredService<{{pluginName}}>(), "{{pluginNamespace}}");
+```
+
+### Expected Benefits
+
+By implementing this plugin, you can expect:
+
+{{#each pluginBenefits}}
+- {{this}}
+{{/each}}
+
+### Example Usage
+
+Here's an example of how to use this plugin in a reasoning flow:
+
+```csharp
+// Get the plugin from the kernel
+var plugin = kernel.Plugins["{{pluginNamespace}}"];
+
+// Example function call
+var result = await kernel.InvokeAsync(plugin["{{exampleFunction}}"], new() {
+    ["{{exampleParam}}"] = "{{exampleValue}}"
+});
+
+// Process the result
+Console.WriteLine(result);
+```
+
+### Testing Recommendations
+
+To verify the plugin is working correctly:
+
+1. Create unit tests for each function
+2. Test with various input combinations
+3. Verify integration with other PMCR-O components
+4. Create end-to-end tests that use this plugin in workflows
+
+## Ready for Integration
+
+The {{pluginName}} plugin is now ready for integration into your PMCR-O system. Would you like to register it with the kernel right away?
+
+{{#pluginGenerator.createAndRegisterPlugin specificationJson}}{{/pluginGenerator.createAndRegisterPlugin}}
+{{~/assistant}}

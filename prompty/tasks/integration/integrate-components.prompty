@@ -1,0 +1,81 @@
+{{!-- integrate-components.prompty --}}
+You are integrating components of the NoCodeAI system.
+Your task is to combine multiple components into a cohesive system, ensuring proper interactions.
+
+## Integration Parameters
+- **ProjectName**: {{projectName}}
+- **Components**: {{components}}
+- **IntegrationStrategy**: {{integrationStrategy}}
+- **DependencyGraph**: {{dependencyGraph}}
+- **SystemArchitecture**: {{systemArchitecture}}
+
+## Integration Process
+
+Let's integrate the components step-by-step:
+
+1. Analyze Component Dependencies
+{{plugin "Integration" "AnalyzeDependencies" components dependencyGraph}}
+
+2. Define Integration Strategy
+{{plugin "Integration" "DefineIntegrationStrategy" components integrationStrategy systemArchitecture}}
+
+3. Identify Integration Points
+{{plugin "Integration" "IdentifyIntegrationPoints" components dependencyGraph}}
+
+4. Generate Interface Adapters
+{{#each (fromJson (plugin "Integration" "IdentifyIntegrationPoints" components dependencyGraph))}}
+### {{name}} Interface Adapter
+```csharp
+{{plugin "Integration" "GenerateAdapter" name source target ../integrationStrategy}}
+```
+{{/each}}
+
+5. Create Integration Tests
+{{#each (fromJson (plugin "Integration" "IdentifyIntegrationPoints" components dependencyGraph))}}
+### {{name}} Integration Test
+```csharp
+{{plugin "Integration" "GenerateIntegrationTest" name source target ../integrationStrategy}}
+```
+{{/each}}
+
+6. Configure Components Communication
+```json
+{{plugin "Integration" "GenerateComponentConfig" components dependencyGraph integrationStrategy}}
+```
+
+7. Build Integration Pipeline
+```csharp
+{{plugin "Integration" "GenerateIntegrationPipeline" components dependencyGraph integrationStrategy systemArchitecture}}
+```
+
+Structured Output:
+```json
+{
+  "project_name": "{{projectName}}",
+  "integration_timestamp": "{{plugin \"System\" \"GetCurrentTimestamp\"}}",
+  "dependency_analysis": {{plugin "Integration" "AnalyzeDependenciesJson" components dependencyGraph}},
+  "integration_strategy": {{plugin "Integration" "DefineIntegrationStrategyJson" components integrationStrategy systemArchitecture}},
+  "integration_points": {{plugin "Integration" "IdentifyIntegrationPointsJson" components dependencyGraph}},
+  "generated_adapters": [
+    {{#each (fromJson (plugin "Integration" "IdentifyIntegrationPoints" components dependencyGraph))}}
+    {
+      "name": "{{name}}",
+      "source": "{{source}}",
+      "target": "{{target}}",
+      "code": "{{plugin \"Integration\" \"GenerateAdapterJson\" name source target ../integrationStrategy}}"
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "integration_tests": [
+    {{#each (fromJson (plugin "Integration" "IdentifyIntegrationPoints" components dependencyGraph))}}
+    {
+      "name": "{{name}}",
+      "code": "{{plugin \"Integration\" \"GenerateIntegrationTestJson\" name source target ../integrationStrategy}}"
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "component_config": {{plugin "Integration" "GenerateComponentConfigJson" components dependencyGraph integrationStrategy}},
+  "integration_pipeline": "{{plugin \"Integration\" \"GenerateIntegrationPipelineJson\" components dependencyGraph integrationStrategy systemArchitecture}}",
+  "integration_files": {{plugin "Integration" "ListIntegrationFilesJson" projectName components integrationStrategy}}
+}
+```

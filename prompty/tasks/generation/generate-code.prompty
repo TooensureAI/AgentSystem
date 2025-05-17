@@ -1,0 +1,88 @@
+{{!-- generate-code.prompty --}}
+You are an expert code generator for the NoCodeAI system.
+Your task is to generate high-quality code based on the provided requirements and specifications.
+
+## Code Generation Parameters
+- **RequirementSpec**: {{requirementSpec}}
+- **ArchitectureStyle**: {{architectureStyle}}
+- **LanguageFramework**: {{languageFramework}}
+- **CodeStandards**: {{codeStandards}}
+- **PerformanceRequirements**: {{performanceRequirements}}
+
+## Code Generation Process
+
+Let's generate the code step-by-step:
+
+1. Analyze Requirements
+{{plugin "CodeGeneration" "AnalyzeRequirements" requirementSpec}}
+
+2. Define Key Components
+{{#each (fromJson (plugin "CodeGeneration" "IdentifyComponents" requirementSpec architectureStyle))}}
+### {{name}} Component
+- **Purpose**: {{purpose}}
+- **Responsibilities**: {{responsibilities}}
+- **Dependencies**: {{dependencies}}
+{{/each}}
+
+3. Create Class Structure
+{{#each (fromJson (plugin "CodeGeneration" "IdentifyComponents" requirementSpec architectureStyle))}}
+### {{name}} Structure
+```csharp
+{{plugin "CodeGeneration" "GenerateClassStructure" name purpose responsibilities dependencies languageFramework codeStandards}}
+```
+{{/each}}
+
+4. Implement Core Functionality
+{{#each (fromJson (plugin "CodeGeneration" "IdentifyComponents" requirementSpec architectureStyle))}}
+### {{name}} Implementation
+```csharp
+{{plugin "CodeGeneration" "ImplementComponent" name purpose responsibilities dependencies languageFramework codeStandards}}
+```
+{{/each}}
+
+5. Implement Integration Points
+{{#each (fromJson (plugin "CodeGeneration" "IdentifyIntegrationPoints" requirementSpec architectureStyle))}}
+### {{name}} Integration
+```csharp
+{{plugin "CodeGeneration" "ImplementIntegration" name source target languageFramework codeStandards}}
+```
+{{/each}}
+
+6. Optimize for Performance
+{{#each (fromJson (plugin "CodeGeneration" "IdentifyComponents" requirementSpec architectureStyle))}}
+{{#if (plugin "CodeGeneration" "RequiresOptimization" name responsibilities performanceRequirements)}}
+### {{name}} Performance Optimization
+```csharp
+{{plugin "CodeGeneration" "OptimizeComponent" name (plugin "CodeGeneration" "ImplementComponent" name purpose responsibilities dependencies languageFramework codeStandards) performanceRequirements}}
+```
+{{/if}}
+{{/each}}
+
+Structured Output:
+```json
+{
+  "generated_code": {
+    "components": [
+      {{#each (fromJson (plugin "CodeGeneration" "IdentifyComponents" requirementSpec architectureStyle))}}
+      {
+        "name": "{{name}}",
+        "file_path": "{{plugin \"CodeGeneration\" \"DetermineFilePath\" name languageFramework}}",
+        "code": "{{plugin \"CodeGeneration\" \"GetFinalCode\" name purpose responsibilities dependencies languageFramework codeStandards performanceRequirements}}"
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ],
+    "integration_points": [
+      {{#each (fromJson (plugin "CodeGeneration" "IdentifyIntegrationPoints" requirementSpec architectureStyle))}}
+      {
+        "name": "{{name}}",
+        "source": "{{source}}",
+        "target": "{{target}}",
+        "code": "{{plugin \"CodeGeneration\" \"ImplementIntegration\" name source target languageFramework codeStandards}}"
+      }{{#unless @last}},{{/unless}}
+      {{/each}}
+    ]
+  },
+  "implementation_notes": {{plugin "CodeGeneration" "GenerateImplementationNotes" requirementSpec architectureStyle languageFramework}},
+  "usage_examples": {{plugin "CodeGeneration" "GenerateUsageExamples" requirementSpec (fromJson (plugin "CodeGeneration" "IdentifyComponents" requirementSpec architectureStyle))}}
+}
+```

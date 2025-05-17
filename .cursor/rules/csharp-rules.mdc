@@ -1,0 +1,19 @@
+# C# Project Rules
+
+## Naming Conventions
+classes: PascalCase
+methods: PascalCase
+properties: PascalCase
+private_fields: camelCase
+interfaces: IPascalCase
+
+## Code Structure
+max_file_length: 1000
+max_method_length: 50
+max_class_length: 500
+
+## Best Practices
+use_async_await: true
+avoid_public_fields: true
+prefer_readonly: true
+use_nullable_reference_types: true
