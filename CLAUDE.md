@@ -1,23 +1,23 @@
-# CLAUDE.md
+# CLAUDE: Comprehensive Learning and Understanding Distributed Evaluation Framework
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Overview
 
-## Project Overview
+CLAUDE (Comprehensive Learning and Understanding Distributed Evaluation) is an advanced thought processing framework built on .NET 9 and Aspire 9.2 that analyzes multi-modal AI outputs across various dimensions. It provides a comprehensive assessment of AI system performance through distributed microservices architecture.
 
-CLAUDE (Comprehensive Learning and Understanding Distributed Evaluation) is an advanced thought processing framework built on .NET Aspire that analyzes multi-modal AI outputs across various dimensions. The framework implements an autonomous agent architecture for distributed evaluation using a modern microservices approach.
+## Key Features
+
+- **Multi-Modal Analysis**: Evaluates outputs across text, visual, and audio modalities
+- **Embodied Cognition**: Assesses gesture and movement understanding capabilities
+- **Cross-Modal Integration**: Measures coherence across different input/output channels
+- **Educational Effectiveness**: Quantifies tutorial and learning facilitation
+- **Workflow Compliance**: Verifies development processes adherence
+- **Predictive Analytics**: Evaluates emotional prediction accuracy
+- **Ethical Alignment**: Ensures outputs meet ethical standards
 
 ## Architecture
 
-The solution is organized into several key projects:
+CLAUDE is built using a modern microservices architecture with .NET 9 and Aspire 9.2:
 
-- **AgentSystem.Core**: Core framework, interfaces, and agent implementations
-- **AgentSystem.Plugins**: Plugin system for extending agent capabilities
-- **AgentSystem.Web**: Blazor-based web interface with MAUI integration
-- **AgentSystem.Mobile**: MAUI-based mobile application
-- **AgentSystem.AppHost**: Aspire host for microservices architecture
-- **AgentSystem.ServiceDefaults**: Default service configurations
-
-The architecture follows a microservices design with these key components:
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                           API Gateway                           │
@@ -37,34 +37,16 @@ The architecture follows a microservices design with these key components:
 └────────────────┘     └──────────────────┘     └─────────────┘
 ```
 
-## Development Setup
-
-### Prerequisites
-
-- .NET 9.0 SDK
-- Docker Desktop (for local development)
-- SQL Server (local or remote)
-- Visual Studio 2022 or VS Code with C# extensions
-
-### Building and Running
-
-```bash
-# Build the solution
-dotnet build AgentSystem.sln
-
-# Run with Aspire
-dotnet run --project AgentSystem.AppHost/AgentSystem.AppHost.csproj
-
-# Run the web application
-dotnet run --project AgentSystem.Web/AgentSystem.Web.csproj
-
-# Run the mobile application (requires emulator/device)
-dotnet run --project AgentSystem.Mobile/AgentSystem.Mobile.csproj
-```
+Each service references the shared ServiceDefaults project directly, which provides common configuration for:
+- Service discovery
+- Health checks
+- Resilience policies
+- OpenTelemetry integration
+- Standardized HTTP client behavior
 
 ## Assessment Metrics
 
-The framework evaluates AI systems across multiple dimensions:
+CLAUDE evaluates systems across multiple dimensions:
 
 | Metric | Description | Threshold |
 |--------|-------------|-----------|
@@ -76,111 +58,86 @@ The framework evaluates AI systems across multiple dimensions:
 | Workflow Compliance | Adherence to development standards | ≥ 0.7 |
 | Emotion Prediction | Accuracy of emotional forecasting | ≥ 0.7 |
 
-## Development Practices
+## Getting Started
 
-### Code Standards
+### Prerequisites
 
-Based on the `.cursor/rules` configurations:
+- .NET 9.0 SDK
+- Aspire 9.2 workload
+- Docker Desktop (for local development)
+- SQL Server (local or remote)
+- Visual Studio 2022 (17.10+) or VS Code with C# extensions
 
-- **Naming Conventions**:
-  - Classes, methods, properties: PascalCase
-  - Private fields: camelCase
-  - Interfaces: IPascalCase
+### Installation
 
-- **Code Structure**:
-  - Maximum file length: 1000 lines
-  - Maximum method length: 50 lines
-  - Maximum class length: 500 lines
+1. Install .NET 9 SDK and Aspire 9.2 workload:
+   ```bash
+   dotnet workload install aspire
+   ```
 
-- **Best Practices**:
-  - Use async/await for asynchronous operations
-  - Avoid public fields
-  - Prefer readonly fields
-  - Use nullable reference types
+2. Clone the repository:
+   ```bash
+   git clone https://github.com/your-org/claude-framework.git
+   cd claude-framework
+   ```
 
-### Git Workflow
+3. Build the solution:
+   ```bash
+   dotnet build
+   ```
 
-- **Branch Naming**:
-  - Features: `feature/`
-  - Bug fixes: `bugfix/`
-  - Releases: `release/v{major}.{minor}.{patch}`
+4. Run with Aspire:
+   ```bash
+   dotnet run --project ThoughtProcessor.AppHost
+   ```
 
-- **Commit Messages**: Use conventional commits format:
-  - feat: A new feature
-  - fix: A bug fix
-  - docs: Documentation only changes
-  - style: Changes that do not affect the meaning of the code
-  - refactor: A code change that neither fixes a bug nor adds a feature
-  - perf: A code change that improves performance
-  - test: Adding missing tests or correcting existing tests
-  - build: Changes that affect the build system or external dependencies
-  - ci: Changes to our CI configuration files and scripts
-  - chore: Other changes that don't modify src or test files
-  - revert: Reverts a previous commit
+5. Access the dashboard and API documentation:
+   ```
+   Dashboard: https://localhost:18888
+   API Documentation: https://localhost:5000
+   ```
 
-## Agent and Plugin Development
+### Configuration
 
-### Agent Template
+Edit `appsettings.json` in the AppHost project to configure:
 
-```csharp
-/**
- * @class {className}
- * @description {description}
- * @implements {interfaces}
- */
-public class {className} : IAgent
+```json
 {
-    private readonly ILogger<{className}> _logger;
-
-    public {className}(ILogger<{className}> logger)
-    {
-        _logger = logger;
+  "Aspire": {
+    "Dashboard": {
+      "Enabled": true,
+      "Port": 18888
+    },
+    "HealthChecks": {
+      "Enabled": true,
+      "DetailedOutput": true
+    },
+    "Telemetry": {
+      "Exporters": {
+        "Console": true,
+        "OTLP": true
+      }
     }
-
-    public async Task ExecuteAsync()
-    {
-        // Agent implementation
+  },
+  "Assessment": {
+    "ValidationThresholds": {
+      "EthicalScore": 0.8,
+      "SemanticCoherenceScore": 0.7,
+      "EmotionalCoherenceScore": 0.7,
+      "TutorialEffectivenessScore": 0.7,
+      "ServerPerformanceScore": 0.7,
+      "WorkflowComplianceScore": 0.7,
+      "EmotionPredictionAccuracy": 0.7
     }
+  }
 }
 ```
 
-### Plugin Template
+## Usage
 
-```csharp
-/**
- * @class {className}
- * @description {description}
- * @implements {interfaces}
- */
-public class {className} : IPlugin
-{
-    private readonly ILogger<{className}> _logger;
+### API Endpoints
 
-    public {className}(ILogger<{className}> logger)
-    {
-        _logger = logger;
-    }
-
-    public async Task InitializeAsync()
-    {
-        // Plugin initialization
-    }
-}
-```
-
-## Prompty System
-
-The project uses a template-driven approach with `.prompty` files organized in these categories:
-
-- **bootstrap**: System initialization and capability assessment
-- **evolution**: System evolution, plugin generation, and evaluation
-- **personas**: Different agent personas (developer, architect, QA, etc.)
-- **tasks**: Task-specific templates (analysis, generation, evaluation, etc.)
-- **templates**: Core reasoning and operational templates
-
-## API Usage
-
-The main assessment endpoint accepts JSON input:
+The main assessment endpoint accepts JSON input matching the template schema:
 
 ```http
 POST /api/assessment
@@ -190,27 +147,146 @@ Content-Type: application/json
   "metaReflection": { ... },
   "multiModalOutput": { ... },
   "embodiedCognitionOutput": { ... },
-  // other outputs...
+  "gestureOutput": { ... },
+  "voiceOutput": { ... },
+  "crossModalFeedback": { ... },
+  "educationalOutput": { ... },
+  "mcpServerOutput": { ... },
+  "workflowComplianceOutput": { ... },
+  "thoughtChain": { ... },
+  "systemState": { ... }
 }
 ```
 
-## Configuration
-
-Edit `appsettings.json` in the AppHost project to configure system settings:
+### Response Format
 
 ```json
 {
-  "Aspire": {
-    "Dashboard": {
-      "Enabled": true,
-      "Port": 18888
-    }
-  },
-  "Assessment": {
-    "ValidationThresholds": {
-      "EthicalScore": 0.8,
-      // other thresholds...
-    }
+  "assessment": {
+    "gaps": [
+      "Limited contextual awareness",
+      "Insufficient cross-modal integration"
+    ],
+    "opportunities": [
+      "Enhance visual-textual alignment",
+      "Improve emotion recognition"
+    ],
+    "ethical_score": 0.92,
+    "semantic_coherence_score": 0.85,
+    "emotional_coherence_score": 0.78,
+    "tutorial_effectiveness_score": 0.85,
+    "server_performance_score": 0.89,
+    "workflow_compliance_score": 0.78,
+    "workflow_compliance_details": {
+      "branch_compliance_score": 0.82,
+      "commit_compliance_score": 0.75,
+      "pr_compliance_score": 0.77
+    },
+    "emotion_prediction_accuracy": 0.88
+  }
+}
+```
+
+## Extending CLAUDE
+
+### Adding New Analyzers
+
+1. Create a new project for your analyzer:
+   ```bash
+   dotnet new webapi -n ThoughtProcessor.NewAnalyzer
+   ```
+
+2. Implement the analyzer interface:
+   ```csharp
+   public interface INewAnalyzer
+   {
+       Task<NewAnalyzerResult> AnalyzeAsync(NewAnalyzerInput input);
+   }
+   ```
+
+3. Add the analyzer to AppHost:
+   ```csharp
+   var newAnalyzer = builder.AddProject<Projects.ThoughtProcessor_NewAnalyzer>("newanalyzer")
+       .WithReference(serviceDefaults);
+   ```
+
+4. Reference it in the API Gateway.
+
+### Custom Validation Rules
+
+Add new validation rules by editing the `ValidationRules` in the template:
+
+```json
+{
+  "rule": "output.assessment.new_metric_score >= 0.7",
+  "errorMessage": "New metric below threshold"
+}
+```
+
+## Integration with AI Systems
+
+CLAUDE can be used to evaluate large language models, multimodal AI systems, and other cognitive architectures. It provides standardized metrics and identifies improvement opportunities.
+
+### Integration Example
+
+```csharp
+// Client-side integration
+using var client = new HttpClient();
+client.BaseAddress = new Uri("https://claude-api.example.com/");
+
+var assessmentRequest = new AssessmentInput
+{
+    MultiModalOutput = captureMultiModalOutput(),
+    EmbodiedCognitionOutput = captureEmbodiedOutput(),
+    // ... other outputs
+};
+
+var response = await client.PostAsJsonAsync("api/assessment", assessmentRequest);
+var result = await response.Content.ReadFromJsonAsync<AssessmentResult>();
+
+// Process assessment results
+if (result.Assessment.EthicalScore < 0.8)
+{
+    // Take corrective action
+}
+```
+
+## Contributing
+
+We welcome contributions to the CLAUDE framework:
+
+1. Fork the repository
+2. Create a feature branch
+## GitHub Integration
+
+CLAUDE includes a robust GitHub integration service that monitors Semantic Kernel updates:
+
+### Features
+
+- **Automated Repository Monitoring**: Tracks specified GitHub repositories (like Microsoft's Semantic Kernel) for changes
+- **Release Detection**: Identifies new releases and extracts key information from release notes
+- **Commit Analysis**: Monitors commits for breaking changes, API modifications, and security updates
+- **Version Comparison**: Automatically detects if current Semantic Kernel version is outdated
+- **Performance Metrics**: Evaluates server performance against latest available features
+- **Update Notifications**: Provides actionable insights when updates are available
+
+### Configuration
+
+Set up GitHub monitoring in your `appsettings.json`:
+
+```json
+{
+  "GitHub": {
+    "Token": "your-github-token",
+    "ClientName": "CLAUDE-Framework",
+    "Repositories": [
+      {
+        "Owner": "microsoft",
+        "Name": "semantic-kernel",
+        "Branch": "main",
+        "TagPrefix": "v"
+      }
+    ]
   }
 }
 ```
