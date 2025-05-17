@@ -33,9 +33,13 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
-  <!-- Using default web content handling -->
+  <!-- Using explicit web content handling to avoid duplicate files -->
   <PropertyGroup>
-    <EnableDefaultContentItems>true</EnableDefaultContentItems>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\**\*" />
+  </ItemGroup>
 
 </Project>
